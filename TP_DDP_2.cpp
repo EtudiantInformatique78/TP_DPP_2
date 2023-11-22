@@ -2,10 +2,19 @@
 //
 
 #include <iostream>
+#include <deque>
+
+#include "Board.h"
+
 
 int main()
 {
+    Board b = Board();
+    b.printBoard();
 
+    b.push_back_column();
+
+    b.printBoard();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
