@@ -85,6 +85,24 @@ public:
 		//std::cout << "Tata" << std::endl;
 	}
 
+	void push_north_back(int value, int index)
+	{
+		std::deque<std::deque<int>>::iterator it;
+		int ind = 0;
+		for (it = board.begin(); it != board.end(); it++)
+		{
+			if(ind == index)
+			{
+				(*it).push_back(value);
+			}			
+			else
+			{
+				(*it).push_back(0);
+			}
+			ind += 1;
+		}
+	}
+
 	void push_north_front(int i)
 	{
 		std::deque<std::deque<int>>::iterator it;
@@ -101,4 +119,21 @@ public:
 		}
 	}
 
+	void push_north_front(int value, int index)
+	{
+		std::deque<std::deque<int>>::iterator it;
+		int ind = 0;
+		for (it = board.begin(); it != board.end(); it++)
+		{
+			if (ind == index)
+			{
+				(*it).push_front(value);
+			}
+			else
+			{
+				(*it).push_front(0);
+			}
+			ind += 1;
+		}
+	}
 };

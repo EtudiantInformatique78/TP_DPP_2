@@ -20,6 +20,14 @@ int main()
     std::cout << std::endl;
     b.printBoard();
 
+    b.push_north_back(1, 3);
+    std::cout << std::endl;
+    b.printBoard();
+
+    b.push_north_front(5, 2);
+    std::cout << std::endl;
+    b.printBoard();
+
     /*
     std::deque<int> gquizz;
     gquizz.push_back(10);
