@@ -42,7 +42,6 @@ public:
 				deck.push_back(j);
 			}
 			board.push_back(deck);
-
 		}
 	};
 	virtual ~Board() {};
@@ -99,6 +98,19 @@ public:
 				(*it).push_front(0);
 			}
 		}
+	}
+
+	//add a node to the end of a column (so as a new row)
+	void push_back_column()
+	{
+		std::deque<int> newRow;
+		std::deque<int>::iterator it;
+		int i = 0;
+		for(it = board[0].begin(); it != board[0].end(); it++)
+		{
+			newRow.push_front(0);
+		}
+		board.push_back(newRow);
 	}
 
 };

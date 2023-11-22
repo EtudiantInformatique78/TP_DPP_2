@@ -2,10 +2,10 @@
 //
 
 #include <iostream>
-
 #include <deque>
 
 #include "Board.h"
+
 
 int main()
 {
