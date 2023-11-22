@@ -3,9 +3,44 @@
 
 #include <iostream>
 
+#include <deque>
+
+#include "Board.h"
+
 int main()
 {
+    //std::cout << "Hello World!\n";
+    Board b = Board();
+    b.printBoard();
+    b.push_north_back(1);
+    std::cout << std::endl;
+    b.printBoard();
 
+    b.push_north_front(3);
+    std::cout << std::endl;
+    b.printBoard();
+
+    /*
+    std::deque<int> gquizz;
+    gquizz.push_back(10);
+    gquizz.push_front(20);
+    gquizz.push_back(30);
+    gquizz.push_front(15);
+
+    std::deque<int>::iterator it;
+    for(it = gquizz.begin(); it != gquizz.end(); it++)
+    {
+        std::cout << *it << std::endl;
+    }
+
+    std::cout << "Size of gquizz : " << gquizz.size() << std::endl;
+    std::cout << "Max Size of gquizz : " << gquizz.max_size() << std::endl;
+
+    std::cout << "gquizz.at(2): " << gquizz.at(2) << std::endl;
+
+    std::cout << "gquizz.front(): " << gquizz.front() << std::endl;
+    std::cout << "gquizz.back(): " << gquizz.back() << std::endl;
+    */
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
