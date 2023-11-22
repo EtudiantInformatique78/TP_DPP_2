@@ -136,4 +136,77 @@ public:
 			ind += 1;
 		}
 	}
+
+
+	void push_west_back(int value)
+	{
+		std::deque<int> newRow;
+		unsigned int size = board.at(0).size();
+		for(unsigned int i = 0; i < size ; i++)
+		{
+			if(i == 0)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
+		}
+		board.push_back(newRow);
+	}
+
+	void push_west_back(int value, int index)
+	{
+		std::deque<int> newRow;
+		unsigned int size = board.at(0).size();
+		for (unsigned int i = 0; i < size; i++)
+		{
+			if (i == index)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
+		}
+		board.push_back(newRow);
+	}
+
+	void push_west_front(int value)
+	{
+		std::deque<int> newRow;
+		unsigned int size = board.at(0).size();
+		for(unsigned int i = 0; i < size ; i++)
+		{
+			if(i == 0)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
+		}
+		board.push_front(newRow);
+	}
+
+	void push_west_front(int value, int index)
+	{
+		std::deque<int> newRow;
+		unsigned int size = board.at(0).size();
+		for (unsigned int i = 0; i < size; i++)
+		{
+			if (i == index)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
+		}
+		board.push_front(newRow);
+	}
 };

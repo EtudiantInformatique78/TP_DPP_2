@@ -12,6 +12,16 @@ int main()
     //std::cout << "Hello World!\n";
     Board b = Board();
     b.printBoard();
+    
+    b.push_west_back(2);
+    std::cout << std::endl;
+    b.printBoard();
+
+    b.push_west_front(5);
+
+    std::cout << std::endl;
+    b.printBoard();
+    /*
     b.push_north_back(1);
     std::cout << std::endl;
     b.printBoard();
@@ -27,6 +37,9 @@ int main()
     b.push_north_front(5, 2);
     std::cout << std::endl;
     b.printBoard();
+    */
+
+    
 
     /*
     std::deque<int> gquizz;
