@@ -5,14 +5,30 @@
 #include <deque>
 
 #include "Board.h"
-
+#include "PathFindingStrategy.h"
 
 int main()
 {
     //std::cout << "Hello World!\n";
     Board b = Board();
     
-    b.printBoard();
+    //b.printBoard();
+
+    ContextPathFinding cpf;
+
+    cpf.setStrategy(std::shared_ptr<PathFindingStrategy>(new DijkstraStrategy()) ) ;
+
+    std::shared_ptr<Point> p1 = std::shared_ptr<Point>(new Point(5, 3));
+
+    std::shared_ptr<Point> p2 = std::shared_ptr<Point>(new Point(4, 6));
+
+    cpf.findPath(b, p1, p2);
+
+    cpf.setStrategy(std::shared_ptr<PathFindingStrategy>(new AStarStrategy()));
+
+    cpf.findPath(b, p1, p2);
+
+
     /*
     b.push_est();
     b.printBoard();
