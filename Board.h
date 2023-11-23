@@ -41,11 +41,11 @@ private:
 
 public:
 	Board() {
-		for (int i = 0; i <= 5; i++)
+		for (int i = -2; i <= 2; i++)
 		{
 
 			std::deque<std::shared_ptr<Point>> deck;
-			for (int j = 0; j <= 6; j++)
+			for (int j = -2; j <= 2; j++)
 			{
 				deck.push_back(std::shared_ptr<Point>(new Point(j, i)));
 			}
@@ -73,18 +73,29 @@ public:
 
 		std::cout << "----------------------------------" << std::endl;
 	}
-
 	
 	void push_est()
 	{
 	std::deque<std::deque<std::shared_ptr<Point>>>::iterator it;
-	unsigned int size = board.at(0).size();
-	int j = 0;
+	unsigned int size = board.at(0).at(board.at(0).size() - 1)->getX();
+	int j = board.at(0).at(0)->getY();
 		for (it = board.begin(); it != board.end(); it++)
 		{
-			(*it).push_back(std::shared_ptr<Point>(new Point(size + 1, j)));
+			(*it).push_back(std::shared_ptr<Point>(new Point(size + 1 , j)));
 			j++;
 		}
+	}
+
+	void push_south()
+	{
+		std::deque<std::shared_ptr<Point>> newRow;
+		unsigned int sizeLine = board.at(0).at(board.at(0).size()-1)->getX();
+		unsigned int sizeColumn = board.at(board.size() - 1).at(0)->getY();
+		for (unsigned int i = board.at(0).at(0)->getX(); i < sizeLine; i++)
+		{
+			newRow.push_back(std::shared_ptr<Point>(new Point(i, sizeColumn + 1)));
+		}
+		board.push_back(newRow);
 	}
 
 	/*

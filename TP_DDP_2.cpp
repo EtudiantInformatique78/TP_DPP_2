@@ -14,6 +14,9 @@ int main()
     b.printBoard();
 
     b.push_est();
+    b.push_south();
+
+    b.printBoard();
 
     
 
