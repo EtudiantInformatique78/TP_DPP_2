@@ -22,6 +22,9 @@ int main()
     b.push_west();
     b.printBoard();
 
+    b.push_north();
+    b.printBoard();
+
     
 
     /*

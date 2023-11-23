@@ -124,64 +124,21 @@ public:
 		}
 	}
 
-	
+	void push_north()
+	{
+		std::deque<std::shared_ptr<Point>> newRow;
+		int sizeLine = board.at(0).size();
+		int sizeColumn = board.size();
+		int maxIndexLine = board.at(0).at(sizeLine - 1)->getX() + 1;
+		int minIndexColumn = board.at(0).at(0)->getY();
+		for (int i = board.at(0).at(0)->getX(); i < maxIndexLine; i++)
+		{
+			newRow.push_back(std::shared_ptr<Point>(new Point(i, minIndexColumn - 1)));
+		}
+		board.push_front(newRow);
+	}
 	
 	/*
-	void push_west(int value, int index)
-	{
-		std::deque<std::deque<int>>::iterator it;
-		int ind = 0;
-		for (it = board.begin(); it != board.end(); it++)
-		{
-			if (ind == index)
-			{
-				(*it).push_front(value);
-			}
-			else
-			{
-				(*it).push_front(0);
-			}
-			ind += 1;
-		}
-	}
-
-
-	void push_south(int value)
-	{
-		std::deque<int> newRow;
-		unsigned int size = board.at(0).size();
-		for(unsigned int i = 0; i < size ; i++)
-		{
-			if(i == 0)
-			{
-				newRow.push_back(value);
-			}
-			else
-			{
-				newRow.push_back(0);
-			}
-		}
-		board.push_back(newRow);
-	}
-
-	void push_south(int value, int index)
-	{
-		std::deque<int> newRow;
-		unsigned int size = board.at(0).size();
-		for (unsigned int i = 0; i < size; i++)
-		{
-			if (i == index)
-			{
-				newRow.push_back(value);
-			}
-			else
-			{
-				newRow.push_back(0);
-			}
-		}
-		board.push_back(newRow);
-	}
-
 	void push_north(int value)
 	{
 		std::deque<int> newRow;
