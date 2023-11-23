@@ -2,6 +2,8 @@
 #include <iostream>
 #include <deque>
 #include <fstream>
+#include <string>
+#include <sstream>
 
 class Point
 {
@@ -49,10 +51,10 @@ public:
 	Board() {
 
 		// file pointer 
-		std::fstream fout;
+		std::fstream fread;
 
 		// opens an existing csv file or creates a new file. 
-		fout.open("board.csv", std::ios::out | std::ios::app);
+		fread.open("board.csv", std::ios::in);
 
 		const int initialY = -10;
 		const int initialX = -10;
@@ -61,6 +63,78 @@ public:
 		const int lastY = initialY + sizeInit;
 		const int lastX = initialX + sizeInit;
 
+		std::string temp;
+		std::string line;
+		std::string word;
+
+		while(fread >> temp)
+		{
+			std::getline(fread, line);
+			std::stringstream s(temp);
+			//std::cout << s.str();
+			std::deque<std::shared_ptr<Point>> deck;
+			while(std::getline(s, word, ';'))
+			{
+				//std::cout << "here" << std::endl;
+				//std::cout << word << std::endl;
+
+
+				size_t pos = 0;
+				std::string token;
+				std::string delimiter = ",";
+				int i = 0;
+				
+				int x;
+				int y;
+				bool passable;
+
+
+				while ((pos = word.find(delimiter)) != std::string::npos) {
+					token = word.substr(0, pos);
+
+					if(i == 0)
+					{
+						token.erase(0, 1);
+						x = std::stoi(token);
+					}
+					else if(i == 1)
+					{
+						y = std::stoi(token);
+					}
+					else if(i==2)
+					{
+						if(token == "true)")
+						{
+							passable = true;
+						}
+						else if(token == "false)")
+						{
+							passable = false;
+						}
+					}
+					//std::cout << token << std::endl;
+					i = (i + 1) % 3;
+					word.erase(0, pos + delimiter.length());
+
+
+
+
+				}
+				//std::cout << s << std::endl;
+
+				std::shared_ptr<Point> ptr = std::shared_ptr<Point>(new Point(y, x));
+				//fout << (*ptr) << ";";
+				deck.push_back(ptr);
+
+
+
+			}
+
+			board.push_back(deck);
+		}
+
+		/*
+		
 		for (int i = initialY; i <= lastY; i++)
 		{
 
@@ -68,13 +142,16 @@ public:
 			for (int j = initialX; j <= lastX; j++)
 			{
 				std::shared_ptr<Point> ptr = std::shared_ptr<Point>(new Point(j, i));
-				fout << (*ptr) << ";";
+				//fout << (*ptr) << ";";
 				deck.push_back(ptr);
 			}
-			fout << "\n";
+			//fout << "\n";
 			board.push_back(deck);
 
 		}
+
+		*/
+		
 	};
 	virtual ~Board() {};
 

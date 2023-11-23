@@ -11,8 +11,9 @@ int main()
 {
     //std::cout << "Hello World!\n";
     Board b = Board();
+    
     b.printBoard();
-
+    /*
     b.push_est();
     b.printBoard();
 
@@ -24,6 +25,8 @@ int main()
 
     b.push_north();
     b.printBoard();
+    */
+    
 
     
 
