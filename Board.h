@@ -89,11 +89,13 @@ public:
 	void push_south()
 	{
 		std::deque<std::shared_ptr<Point>> newRow;
-		unsigned int sizeLine = board.at(0).at(board.at(0).size()-1)->getX();
-		unsigned int sizeColumn = board.at(board.size() - 1).at(0)->getY();
-		for (unsigned int i = board.at(0).at(0)->getX(); i < sizeLine; i++)
+		int sizeLine = board.at(0).size();
+		int sizeColumn = board.size();
+		int maxIndexLine = board.at(0).at(sizeLine -1)->getX()+1;
+		int maxIndexColumn = board.at(sizeColumn - 1).at(0)->getY();
+		for (int i = board.at(0).at(0)->getX(); i < maxIndexLine; i++)
 		{
-			newRow.push_back(std::shared_ptr<Point>(new Point(i, sizeColumn + 1)));
+			newRow.push_back(std::shared_ptr<Point>(new Point(i, maxIndexColumn + 1)));
 		}
 		board.push_back(newRow);
 	}
