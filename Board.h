@@ -20,7 +20,7 @@ public:
 	//destructor
 	~Point()
 	{
-		std::cout << "point destroyed" << std::endl;
+		//std::cout << "point destroyed" << std::endl;
 	}
 
 	//getters & setter
@@ -41,11 +41,18 @@ private:
 
 public:
 	Board() {
-		for (int i = -2; i <= 2; i++)
+		const int initialY = -2;
+		const int initialX = -2;
+		const int sizeInit = 4;
+
+		const int lastY = initialY + sizeInit;
+		const int lastX = initialX + sizeInit;
+
+		for (int i = initialY; i <= lastY; i++)
 		{
 
 			std::deque<std::shared_ptr<Point>> deck;
-			for (int j = -2; j <= 2; j++)
+			for (int j = initialX; j <= lastX; j++)
 			{
 				deck.push_back(std::shared_ptr<Point>(new Point(j, i)));
 			}
@@ -76,14 +83,17 @@ public:
 	
 	void push_est()
 	{
-	std::deque<std::deque<std::shared_ptr<Point>>>::iterator it;
-	unsigned int size = board.at(0).at(board.at(0).size() - 1)->getX();
-	int j = board.at(0).at(0)->getY();
+		std::deque<std::deque<std::shared_ptr<Point>>>::iterator it;
+		unsigned int size = static_cast<unsigned int>(board.at(0).size());
+		int cursor = board.at(0).at(size - 1)->getX();
+
+		int j = board.at(0).at(0)->getY();	
 		for (it = board.begin(); it != board.end(); it++)
 		{
-			(*it).push_back(std::shared_ptr<Point>(new Point(size + 1 , j)));
-			j++;
+				(*it).push_back(std::shared_ptr<Point>(new Point(cursor + 1 , j)));
+				j++;
 		}
+
 	}
 
 	void push_south()
@@ -100,41 +110,23 @@ public:
 		board.push_back(newRow);
 	}
 
+	
+	void push_west()
+	{
+		std::deque<std::deque<std::shared_ptr<Point>>>::iterator it;
+		unsigned int size = static_cast<unsigned int>(board.at(0).size());
+		int cursor = board.at(0).at(0)->getX();
+		int j = board.at(0).at(0)->getY();
+		for (it = board.begin(); it != board.end(); it++)
+		{
+			(*it).push_front(std::shared_ptr<Point>(new Point(cursor - 1, j)));
+			j++;
+		}
+	}
+
+	
+	
 	/*
-	void push_est(int value, int index)
-	{
-		std::deque<std::deque<int>>::iterator it;
-		int ind = 0;
-		for (it = board.begin(); it != board.end(); it++)
-		{
-			if(ind == index)
-			{
-				(*it).push_back(value);
-			}			
-			else
-			{
-				(*it).push_back(0);
-			}
-			ind += 1;
-		}
-	}
-
-	void push_west(int i)
-	{
-		std::deque<std::deque<int>>::iterator it;
-		for (it = board.begin(); it != board.end(); it++)
-		{
-			if (it == board.begin())
-			{
-				(*it).push_front(i);
-			}
-			else
-			{
-				(*it).push_front(0);
-			}
-		}
-	}
-
 	void push_west(int value, int index)
 	{
 		std::deque<std::deque<int>>::iterator it;
