@@ -67,7 +67,7 @@ public:
 		std::cout << "----------------------------------" << std::endl;
 	}
 
-	void push_north_back(int i)
+	void push_est(int i)
 	{
 		std::deque<std::deque<int>>::iterator it;
 		for(it = board.begin(); it != board.end(); it++)
@@ -85,7 +85,7 @@ public:
 		//std::cout << "Tata" << std::endl;
 	}
 
-	void push_north_back(int value, int index)
+	void push_est(int value, int index)
 	{
 		std::deque<std::deque<int>>::iterator it;
 		int ind = 0;
@@ -103,7 +103,7 @@ public:
 		}
 	}
 
-	void push_north_front(int i)
+	void push_west(int i)
 	{
 		std::deque<std::deque<int>>::iterator it;
 		for (it = board.begin(); it != board.end(); it++)
@@ -119,7 +119,7 @@ public:
 		}
 	}
 
-	void push_north_front(int value, int index)
+	void push_west(int value, int index)
 	{
 		std::deque<std::deque<int>>::iterator it;
 		int ind = 0;
@@ -138,7 +138,7 @@ public:
 	}
 
 
-	void push_west_back(int value)
+	void push_south(int value)
 	{
 		std::deque<int> newRow;
 		unsigned int size = board.at(0).size();
@@ -156,7 +156,7 @@ public:
 		board.push_back(newRow);
 	}
 
-	void push_west_back(int value, int index)
+	void push_south(int value, int index)
 	{
 		std::deque<int> newRow;
 		unsigned int size = board.at(0).size();
@@ -174,7 +174,7 @@ public:
 		board.push_back(newRow);
 	}
 
-	void push_west_front(int value)
+	void push_north(int value)
 	{
 		std::deque<int> newRow;
 		unsigned int size = board.at(0).size();
@@ -192,7 +192,7 @@ public:
 		board.push_front(newRow);
 	}
 
-	void push_west_front(int value, int index)
+	void push_north(int value, int index)
 	{
 		std::deque<int> newRow;
 		unsigned int size = board.at(0).size();
