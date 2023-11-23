@@ -10,6 +10,7 @@ class Point
 private:
 	int coordX;
 	int coordY;
+	bool passable = true;
 
 public:
 	//constructor
@@ -17,6 +18,13 @@ public:
 	{
 		coordX = _coordX;
 		coordY = _coordY;
+	}
+
+	Point(int _coordX, int _coordY, bool _passable)
+	{
+		coordX = _coordX;
+		coordY = _coordY;
+		passable = _passable;
 	}
 
 	//destructor
@@ -35,9 +43,22 @@ public:
 		return coordY;
 	}
 
+	bool isPassabe()
+	{
+		return passable;
+	}
+
 	friend std::ostream& operator<<(std::ostream& out, Point& p)
 	{
-		out << "(" << p.coordY << "," << p.coordX << ")";
+		if(p.passable)
+		{
+			out << " ";
+		}
+		else
+		{
+			out << "x";
+		}
+//		out << "(" << p.coordY << "," << p.coordX << ")";
 		return out;
 	}
 };
@@ -75,9 +96,6 @@ public:
 			std::deque<std::shared_ptr<Point>> deck;
 			while(std::getline(s, word, ';'))
 			{
-				//std::cout << "here" << std::endl;
-				//std::cout << word << std::endl;
-
 
 				size_t pos = 0;
 				std::string token;
@@ -86,10 +104,11 @@ public:
 				
 				int x;
 				int y;
-				bool passable;
+				bool passable = true;
 
-
-				while ((pos = word.find(delimiter)) != std::string::npos) {
+				//while ((pos = word.find(delimiter)) != std::string::npos) {
+				while (true) {
+					pos = word.find(delimiter);
 					token = word.substr(0, pos);
 
 					if(i == 0)
@@ -101,7 +120,7 @@ public:
 					{
 						y = std::stoi(token);
 					}
-					else if(i==2)
+					else if(i == 2)
 					{
 						if(token == "true)")
 						{
@@ -113,83 +132,29 @@ public:
 						}
 					}
 					//std::cout << token << std::endl;
-					i = (i + 1) % 3;
+					//i = (i + 1) % 3;
+					i += 1;
+					if(i == 3)
+					{
+						break;
+					}
 					word.erase(0, pos + delimiter.length());
 
 
+				} 
 
-
-				}
-				//std::cout << s << std::endl;
-
-				std::shared_ptr<Point> ptr = std::shared_ptr<Point>(new Point(y, x));
-				//fout << (*ptr) << ";";
+				std::shared_ptr<Point> ptr = std::shared_ptr<Point>(new Point(y, x, passable));
 				deck.push_back(ptr);
 
-
-
 			}
-
 			board.push_back(deck);
 		}
-
-		/*
-		
-		for (int i = initialY; i <= lastY; i++)
-		{
-
-			std::deque<std::shared_ptr<Point>> deck;
-			for (int j = initialX; j <= lastX; j++)
-			{
-				std::shared_ptr<Point> ptr = std::shared_ptr<Point>(new Point(j, i));
-				//fout << (*ptr) << ";";
-				deck.push_back(ptr);
-			}
-			//fout << "\n";
-			board.push_back(deck);
-
-		}
-
-		*/
-		
 	};
 	virtual ~Board() {};
 
 
 
-	/*
-	void create()
-	{
-		// file pointer
-		std::fstream fout ;
-
-		// opens an existing csv file or creates a new file.
-		fout.open("Board.csv", std::ios::out | std::ios::app);
-
-
-		// Read the input
-		for (i = 0; i < 5; i++) {
-
-			cin >> roll
-				>> name
-				>> math
-				>> phy
-				>> chem
-				>> bio;
-
-			// Insert the data to file
-			fout << roll << ", "
-				<< name << ", "
-				<< math << ", "
-				<< phy << ", "
-				<< chem << ", "
-				<< bio
-				<< "\n";
-		}
-	}
-
-	*/
-
+	
 	void printBoard()
 	{
 		std::deque<std::deque<std::shared_ptr<Point>>>::iterator it1;
@@ -201,7 +166,9 @@ public:
 		{
 			for (it2 = (*it1).begin(); it2 != (*it1).end(); it2++)
 			{
-				std::cout << " | (" << (*it2)->getX() << "," << (*it2)->getY() << ") | ";
+				
+				std::cout << *((*it2).get());
+				//std::cout << " | (" << (*it2)->getX() << "," << (*it2)->getY() << ") | ";
 			}
 			std::cout << std::endl;
 		}
