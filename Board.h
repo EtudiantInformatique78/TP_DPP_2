@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <deque>
-#include <iostream>
+#include <fstream>
 
 class Point
 {
@@ -32,6 +32,12 @@ public:
 	{
 		return coordY;
 	}
+
+	friend std::ostream& operator<<(std::ostream& out, Point& p)
+	{
+		out << "(" << p.coordY << "," << p.coordX << ")";
+		return out;
+	}
 };
 
 class Board
@@ -41,9 +47,16 @@ private:
 
 public:
 	Board() {
-		const int initialY = -2;
-		const int initialX = -2;
-		const int sizeInit = 4;
+
+		// file pointer 
+		std::fstream fout;
+
+		// opens an existing csv file or creates a new file. 
+		fout.open("board.csv", std::ios::out | std::ios::app);
+
+		const int initialY = -10;
+		const int initialX = -10;
+		const int sizeInit = 30;
 
 		const int lastY = initialY + sizeInit;
 		const int lastX = initialX + sizeInit;
@@ -54,13 +67,51 @@ public:
 			std::deque<std::shared_ptr<Point>> deck;
 			for (int j = initialX; j <= lastX; j++)
 			{
-				deck.push_back(std::shared_ptr<Point>(new Point(j, i)));
+				std::shared_ptr<Point> ptr = std::shared_ptr<Point>(new Point(j, i));
+				fout << (*ptr) << ";";
+				deck.push_back(ptr);
 			}
+			fout << "\n";
 			board.push_back(deck);
 
 		}
 	};
 	virtual ~Board() {};
+
+
+
+	/*
+	void create()
+	{
+		// file pointer
+		std::fstream fout ;
+
+		// opens an existing csv file or creates a new file.
+		fout.open("Board.csv", std::ios::out | std::ios::app);
+
+
+		// Read the input
+		for (i = 0; i < 5; i++) {
+
+			cin >> roll
+				>> name
+				>> math
+				>> phy
+				>> chem
+				>> bio;
+
+			// Insert the data to file
+			fout << roll << ", "
+				<< name << ", "
+				<< math << ", "
+				<< phy << ", "
+				<< chem << ", "
+				<< bio
+				<< "\n";
+		}
+	}
+
+	*/
 
 	void printBoard()
 	{
