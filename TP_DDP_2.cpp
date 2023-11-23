@@ -25,6 +25,8 @@ int main()
     b.push_north();
     b.printBoard();
 
+    b.push_point(7, 7);
+    b.printBoard();
     
 
     /*
