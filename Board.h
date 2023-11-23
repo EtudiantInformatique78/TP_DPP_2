@@ -8,15 +8,13 @@ class Point
 private:
 	int coordX;
 	int coordY;
-	std::string name;
 
 public:
 	//constructor
-	Point(int _coordX, int _coordY, std::string _name)
+	Point(int _coordX, int _coordY)
 	{
 		coordX = _coordX;
 		coordY = _coordY;
-		name = _name;
 	}
 
 	//destructor
@@ -24,22 +22,32 @@ public:
 	{
 		std::cout << "point destroyed" << std::endl;
 	}
+
+	//getters & setter
+	int getX()
+	{
+		return coordX;
+	}
+	int getY()
+	{
+		return coordY;
+	}
 };
 
 class Board
 {
 private:
-	std::deque<std::deque<int>> board;
+	std::deque<std::deque<std::shared_ptr<Point>>> board;
 
 public:
 	Board() {
-		for (int i = 1; i <= 5; i++)
+		for (int i = 0; i <= 5; i++)
 		{
 
-			std::deque<int> deck;
-			for (int j = 1; j <= 6; j++)
+			std::deque<std::shared_ptr<Point>> deck;
+			for (int j = 0; j <= 6; j++)
 			{
-				deck.push_back(j);
+				deck.push_back(std::shared_ptr<Point>(new Point(j, i)));
 			}
 			board.push_back(deck);
 
@@ -47,11 +55,10 @@ public:
 	};
 	virtual ~Board() {};
 
-
 	void printBoard()
 	{
-		std::deque<std::deque<int>>::iterator it1;
-		std::deque<int>::iterator it2;
+		std::deque<std::deque<std::shared_ptr<Point>>>::iterator it1;
+		std::deque<std::shared_ptr<Point>>::iterator it2;
 
 		std::cout << "----------------------------------" << std::endl;
 
@@ -59,7 +66,7 @@ public:
 		{
 			for (it2 = (*it1).begin(); it2 != (*it1).end(); it2++)
 			{
-				std::cout << " | " << (*it2) << " | ";
+				std::cout << " | (" << (*it2)->getX() << "," << (*it2)->getY() << ") | ";
 			}
 			std::cout << std::endl;
 		}
@@ -67,6 +74,7 @@ public:
 		std::cout << "----------------------------------" << std::endl;
 	}
 
+	/*
 	void push_est(int i)
 	{
 		std::deque<std::deque<int>>::iterator it;
@@ -209,4 +217,5 @@ public:
 		}
 		board.push_front(newRow);
 	}
+	*/
 };
