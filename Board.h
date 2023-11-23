@@ -63,16 +63,6 @@ public:
 		//		out << "(" << p.coordY << "," << p.coordX << ")";
 		return out;
 	}
-	/*
-	int getCost()
-	{
-		return cost;
-	}
-	int getHeuristic()
-	{
-		return heuristic;
-	}
-	*/
 	
 
 	void setX(int x)
@@ -83,17 +73,6 @@ public:
 	{
 		coordY = y;
 	}
-	
-	/*
-	void setCost(int _cost)
-	{
-		cost = _cost;
-	}
-	void setHeuristic(int _heuristic)
-	{
-		heuristic = _heuristic;
-	}
-	*/
 	
 
 	//mehods 
