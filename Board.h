@@ -138,6 +138,37 @@ public:
 		board.push_front(newRow);
 	}
 	
+
+	void push_north_west()
+	{
+		push_north();
+		push_west();
+	}
+
+	void push_north_est()
+	{
+		push_north();
+		push_est();
+	}
+
+	void push_south_west()
+	{
+		push_south();
+		push_west();
+	}
+
+	void push_south_est()
+	{
+		push_south();
+		push_est();
+	}
+
+	void push_coordonne(int x, int y)
+	{
+		
+	}
+
+
 	/*
 	void push_north(int value)
 	{
