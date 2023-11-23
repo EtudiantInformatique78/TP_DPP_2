@@ -42,6 +42,7 @@ public:
 				deck.push_back(j);
 			}
 			board.push_back(deck);
+
 		}
 	};
 	virtual ~Board() {};
@@ -66,7 +67,7 @@ public:
 		std::cout << "----------------------------------" << std::endl;
 	}
 
-	void push_north_back(int i)
+	void push_est(int i)
 	{
 		std::deque<std::deque<int>>::iterator it;
 		for(it = board.begin(); it != board.end(); it++)
@@ -84,7 +85,25 @@ public:
 		//std::cout << "Tata" << std::endl;
 	}
 
-	void push_north_front(int i)
+	void push_est(int value, int index)
+	{
+		std::deque<std::deque<int>>::iterator it;
+		int ind = 0;
+		for (it = board.begin(); it != board.end(); it++)
+		{
+			if(ind == index)
+			{
+				(*it).push_back(value);
+			}			
+			else
+			{
+				(*it).push_back(0);
+			}
+			ind += 1;
+		}
+	}
+
+	void push_west(int i)
 	{
 		std::deque<std::deque<int>>::iterator it;
 		for (it = board.begin(); it != board.end(); it++)
@@ -100,17 +119,94 @@ public:
 		}
 	}
 
-	//add a node to the end of a column (so as a new row)
-	void push_back_column()
+	void push_west(int value, int index)
+	{
+		std::deque<std::deque<int>>::iterator it;
+		int ind = 0;
+		for (it = board.begin(); it != board.end(); it++)
+		{
+			if (ind == index)
+			{
+				(*it).push_front(value);
+			}
+			else
+			{
+				(*it).push_front(0);
+			}
+			ind += 1;
+		}
+	}
+
+
+	void push_south(int value)
 	{
 		std::deque<int> newRow;
-		std::deque<int>::iterator it;
-		int i = 0;
-		for(it = board[0].begin(); it != board[0].end(); it++)
+		unsigned int size = board.at(0).size();
+		for(unsigned int i = 0; i < size ; i++)
 		{
-			newRow.push_front(0);
+			if(i == 0)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
 		}
 		board.push_back(newRow);
 	}
 
+	void push_south(int value, int index)
+	{
+		std::deque<int> newRow;
+		unsigned int size = board.at(0).size();
+		for (unsigned int i = 0; i < size; i++)
+		{
+			if (i == index)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
+		}
+		board.push_back(newRow);
+	}
+
+	void push_north(int value)
+	{
+		std::deque<int> newRow;
+		unsigned int size = board.at(0).size();
+		for(unsigned int i = 0; i < size ; i++)
+		{
+			if(i == 0)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
+		}
+		board.push_front(newRow);
+	}
+
+	void push_north(int value, int index)
+	{
+		std::deque<int> newRow;
+		unsigned int size = board.at(0).size();
+		for (unsigned int i = 0; i < size; i++)
+		{
+			if (i == index)
+			{
+				newRow.push_back(value);
+			}
+			else
+			{
+				newRow.push_back(0);
+			}
+		}
+		board.push_front(newRow);
+	}
 };
