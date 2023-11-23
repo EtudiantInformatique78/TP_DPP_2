@@ -3,13 +3,38 @@
 
 #include <iostream>
 #include <deque>
+#include <vector>
 
 #include "Board.h"
+
 #include "PathFindingStrategy.h"
+
+void AstarAlgorithm(Board board, std::shared_ptr<Point> objective, std::shared_ptr<Point> start)
+{
+    //init the two lists
+    std::vector<std::shared_ptr<Point>> closedList;
+    std::vector<std::shared_ptr<Point>> openedList;
+    openedList.push_back(start);
+
+    //enter the algorithm
+    while (openedList.size() > 0)
+    {
+        std::shared_ptr<Point> actualPoint = openedList[0];
+        openedList.erase(openedList.begin());
+
+        //check if we arrived
+        if (actualPoint->getX() == objective->getX() && actualPoint->getY() == objective->getY())
+        {
+            //DO SOMETHING LIKE DISPLAY CLOSEDLIST
+        }
+        std::shared_ptr<Point> neighbor = board.get_point(actualPoint->getX()-1, actualPoint->getY()-1);
+
+
+    }
+}
 
 int main()
 {
-    //std::cout << "Hello World!\n";
     Board b = Board();
     
     //b.printBoard();
@@ -44,38 +69,11 @@ int main()
     */
     
 
-    
+    b.push_point(7, 7);
+    b.printBoard();
 
-    /*
-    std::deque<int> gquizz;
-    gquizz.push_back(10);
-    gquizz.push_front(20);
-    gquizz.push_back(30);
-    gquizz.push_front(15);
+    std::shared_ptr<Point> point = b.get_point(2, 5);
 
-    std::deque<int>::iterator it;
-    for(it = gquizz.begin(); it != gquizz.end(); it++)
-    {
-        std::cout << *it << std::endl;
-    }
-
-    std::cout << "Size of gquizz : " << gquizz.size() << std::endl;
-    std::cout << "Max Size of gquizz : " << gquizz.max_size() << std::endl;
-
-    std::cout << "gquizz.at(2): " << gquizz.at(2) << std::endl;
-
-    std::cout << "gquizz.front(): " << gquizz.front() << std::endl;
-    std::cout << "gquizz.back(): " << gquizz.back() << std::endl;
-    */
+    std::cout << "(" << point->getX() << "," << point->getY() << ") : " << point->getCost() << std::endl;
+    b.printBoard();
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
