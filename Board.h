@@ -74,25 +74,20 @@ public:
 		std::cout << "----------------------------------" << std::endl;
 	}
 
-	/*
-	void push_est(int i)
+	
+	void push_est()
 	{
-		std::deque<std::deque<int>>::iterator it;
-		for(it = board.begin(); it != board.end(); it++)
+	std::deque<std::deque<std::shared_ptr<Point>>>::iterator it;
+	unsigned int size = board.at(0).size();
+	int j = 0;
+		for (it = board.begin(); it != board.end(); it++)
 		{
-			if(it == board.begin())
-			{
-				(*it).push_back(i);
-			}
-			else
-			{
-				(*it).push_back(0);
-			}
+			(*it).push_back(std::shared_ptr<Point>(new Point(size + 1, j)));
+			j++;
 		}
-
-		//std::cout << "Tata" << std::endl;
 	}
 
+	/*
 	void push_est(int value, int index)
 	{
 		std::deque<std::deque<int>>::iterator it;
