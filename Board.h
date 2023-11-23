@@ -132,24 +132,17 @@ public:
 	{
 		int sizeLine = board.at(0).size();
 		int sizeColumn = board.size();
-		int maxIndexLine = board.at(0).at(sizeLine - 1)->getX();
-		int maxIndexColumn = board.at(sizeColumn - 1).at(0)->getY();
-		int minIndexLine = board.at(0).at(0)->getX();
-		int minIndexColumn = board.at(0).at(0)->getY();
+		int maxValueX = board.at(0).at(sizeLine - 1)->getX();
+		int maxValueY = board.at(sizeColumn - 1).at(0)->getY();
+		int minValueX = board.at(0).at(0)->getX();
+		int minValueY = board.at(0).at(0)->getY();
 
-		if (coordX < minIndexLine || coordX > maxIndexLine || coordY < minIndexColumn || coordY > maxIndexColumn)
+		if (coordX < minValueX || coordX > maxValueX || coordY < minValueY || coordY > maxValueY)
 		{
-			push_point(coordX, coordY);
+			return nullptr;
 		}
 
-		sizeLine = board.at(0).size();
-		sizeColumn = board.size();
-		maxIndexLine = board.at(0).at(sizeLine - 1)->getX();
-		maxIndexColumn = board.at(sizeColumn - 1).at(0)->getY();
-		minIndexLine = board.at(0).at(0)->getX();
-		minIndexColumn = board.at(0).at(0)->getY();
-
-		return board.at(std::abs(minIndexColumn) + coordY).at(std::abs(minIndexLine) + coordX);
+		return board.at(coordY - minValueY).at(coordX - minValueX);
 	}
 	
 	//push a point in the map
