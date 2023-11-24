@@ -210,6 +210,12 @@ public:
 		std::cout << "----------------------------------" << std::endl;
 	}
 
+
+	std::deque<std::deque<std::shared_ptr<Point>>> getBoard()
+	{
+		return board;
+	}
+
 	int getInitialX()
 	{
 		return initialX;

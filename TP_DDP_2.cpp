@@ -15,10 +15,14 @@
 int main()
 {
 
-    Board b = Board();
+    //Board b = Board();
 
-    AdjacencyListPoint adj_point = AdjacencyListPoint(std::shared_ptr<Board>(&b));
+    std::shared_ptr<Board> bptr = std::shared_ptr<Board>(new Board());
 
+    AdjacencyListPoint adj_point = AdjacencyListPoint(bptr);
+
+    /*
+    
     std::shared_ptr<Point> ptr1 = std::shared_ptr<Point>(new Point(0, 0, true));
     std::shared_ptr<Point> ptr2 = std::shared_ptr<Point>(new Point(0, 1, true));
     std::shared_ptr<Point> ptr3 = std::shared_ptr<Point>(new Point(0, 2, true));
@@ -27,7 +31,7 @@ int main()
     //std::shared_ptr<Point> ptr5 = std::shared_ptr<Point>(new Point(1, 1, true));
     std::shared_ptr<Point> ptr6 = std::shared_ptr<Point>(new Point(1, 2, true));
 
-    adj_point.add_edge(ptr1, ptr2);    
+    adj_point.add_edge(ptr1, ptr2);
     adj_point.add_edge(ptr1, ptr4);
     //adj_point.add_edge(ptr1, ptr5);
 
@@ -41,11 +45,20 @@ int main()
     adj_point.add_edge(ptr3, ptr6);
     //adj_point.add_edge(ptr4, ptr5);
     //adj_point.add_edge(ptr5, ptr6);
-     
+
 
     adj_point.displayAdjList();
 
-    b.printBoard();
+    */
+
+    adj_point.setMap();
+    
+    bptr.get()->printBoard();
+
+    adj_point.displayAdjList();
+    
+
+//    b.printBoard();
 
     /*
     int iniX = -3;
