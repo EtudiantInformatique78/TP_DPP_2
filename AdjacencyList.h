@@ -148,131 +148,57 @@ public:
 
 	void DijkstraAlgorithm(std::shared_ptr<Point> source, std::shared_ptr<Point> dest)
 	{
-
-		//std::set<std::shared_ptr<Point>> hasAdist;
-
-		//std::map<std::shared_ptr<Point>, unsigned int> dist;
-
-		std::shared_ptr<Point> ref = source;
-		unsigned int sourceId = getIdOfPoint(ref, bptr);
-		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
-
 		PQueue pq = PQueue();
+		pq.insertQueue(source, nullptr, 0);
 
-		pq.insertQueue(ref, nullptr, 0);
+		PPU ref = pq.top();
 
+		std::shared_ptr<Point> pointPivot = ref.first;
+		unsigned int distPair = ref.second;
 
-		
-		std::priority_queue<PPU, std::vector<PPU>, Compare> priorityQueue;
-
-		//dist.insert({ source, 0 });
-		//priorityQueue.push({ source, 0 });
-		//hasAdist.insert(source);
-
-
-		std::list<std::shared_ptr<Point>>::iterator it;
-		for(it = lstOfSource.begin(); it != lstOfSource.end() ; ++it)
-		{
-			/*
-			
-			if(hasAdist.find(*it) == hasAdist.end())
-			{
-				unsigned int distanceBetween = dist[ref] + weight(*ref.get(), (*(*it).get()));
-
-				dist.insert({ *it, distanceBetween });
-				priorityQueue.push({*it, distanceBetween});
-				hasAdist.insert(*it);
-				//dist.insert(std::pair<std::shared_ptr<Point>, unsigned int>(*it, distanceBetween));
-			}
-			else
-			{
-				unsigned int distanceBetween = dist[ref] + weight(*ref.get(), (*(*it).get()));
-				if (distanceBetween <=  dist[*it])
-				{
-
-				}
-				dist.insert({ *it, distanceBetween });
-				priorityQueue.push({ *it, distanceBetween });
-			}
-
-			*/
-			
-			
-		}
-
-
-		// updated value are supposed to be before the older value
-		ref = priorityQueue.top().first;
-
-		sourceId = getIdOfPoint(ref, bptr);
-
-		lstOfSource = this->themap[sourceId];
-
-
-
-
-
-		/*
-		
+		//std::shared_ptr<Point> ref = source;
 		unsigned int sourceId = getIdOfPoint(source, bptr);
-
 		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
+		std::list<std::shared_ptr<Point>> lstOfVertex = pq.trueNeighborg(lstOfSource);
 
-		// unsigned int for the vertice u
-		// int for the distance
-		std::map<unsigned int, int> dist = {};
 
-		// unsigned int for the vertice u and the previous one
-		//
-		std::map<unsigned int, unsigned int> prev = {};
-
-		dist.insert(std::pair<unsigned int, int>(sourceId, 0));
-
-		std::queue<std::shared_ptr<Point>> Q;
-		Q.push(source);
-
-		std::list<std::shared_ptr<Point>>::iterator it;
-		for(it = lstOfSource.begin(); it != lstOfSource.end(); ++it)
+		while (!pointsAreEquivalent(pointPivot, dest, bptr))
 		{
-			Q.push(*it);
-		}
+			ref = pq.top();
+			std::shared_ptr<Point> pointPivot = ref.first;
+			unsigned int distPair = ref.second;
 
-		std::set<std::shared_ptr<Point>> S;
+			unsigned int Id = getIdOfPoint(pointPivot, bptr);
+			lstOfSource = this->themap[Id];
+			lstOfVertex = pq.trueNeighborg(lstOfSource);
 
-		while (!Q.empty())
-		{
-			std::shared_ptr<Point> p = Q.front();
-			Q.pop();
-
-			S.insert(p);
-
-			unsigned int pId = getIdOfPoint(p, bptr);
-
-
-			std::list<std::shared_ptr<Point>> neigh = bptr.get()->lstNeighborg(p);
-
-			std::list<std::shared_ptr<Point>>::iterator itNeigh;
-
-			for(itNeigh = neigh.begin(); itNeigh != neigh.end(); ++itNeigh)
+			std::list<std::shared_ptr<Point>>::iterator it;
+			for (it = lstOfVertex.begin(); it != lstOfVertex.end(); ++it)
 			{
-				if (dist.find(getIdOfPoint(*itNeigh, bptr)) == dist.end())
+				unsigned int distanceBetween = distPair + weight(*pointPivot.get(), (*(*it).get()));
+				if (!pq.isInQueue(*it))
 				{
-
+					pq.insertQueue(*it, pointPivot, distanceBetween);
 				}
-				//if()
-				//if(dist[pId])
+				else
+				{
+					PPU pairIt = pq.getValue(*it);
+					unsigned int qdist = pairIt.second;
+
+					if (distanceBetween <= qdist)
+					{
+						pq.updateQueue(*it, pointPivot, distanceBetween);
+					}
+				}
 			}
 
+			pq.pop();
+
+
 		}
 
-
-
-
-		
-		*/
-		
-		
-
+		pq.printPath(source, dest, bptr);
+	
 	}
 
 };

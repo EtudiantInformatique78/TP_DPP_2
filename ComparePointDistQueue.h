@@ -27,6 +27,8 @@ class PQueue
 private:
     
     std::map<std::shared_ptr<Point>, PPU, Compare> map;
+    std::set<std::shared_ptr<Point>> set;
+
 
 public:
     PQueue() {
@@ -69,9 +71,55 @@ public:
         return { vertice, dist };
     }
 
+    PPU getValue(std::shared_ptr<Point> key)
+    {
+        return map[key];
+    }
+
     void pop()
     {
+        set.insert(map.begin()->first);
         map.erase(map.begin());
+    }
+
+    std::list<std::shared_ptr<Point>> trueNeighborg(std::list<std::shared_ptr<Point>> list)
+    {
+        std::list<std::shared_ptr<Point>> returnList;
+        std::list<std::shared_ptr<Point>>::iterator it;
+        for(it = list.begin(); it != list.end(); ++it)
+        {
+            if(set.find(*it) == set.end())
+            {
+                returnList.push_back(*it);
+            }
+        }
+
+        return returnList;
+
+    }
+
+    void printPath(std::shared_ptr<Point> source, std::shared_ptr<Point> dest, std::shared_ptr<Board> bptr)
+    {
+        std::deque<std::shared_ptr<Point>> reversePath;
+        
+        reversePath.push_back(dest);
+
+        std::shared_ptr<Point> nextPoint = map[dest].first;
+        while(!pointsAreEquivalent(nextPoint, source, bptr))
+        {
+            reversePath.push_back(nextPoint);
+            nextPoint = map[nextPoint].first;
+        }
+        reversePath.push_back(source);
+
+        std::deque<std::shared_ptr<Point>>::reverse_iterator it;
+
+        for(it = reversePath.rbegin(); it != reversePath.rend(); ++it)
+        {
+            std::cout << "(" << (*it).get()->getX() << "," << (*it).get()->getY() << ")" << std::endl;
+        }
+
+
     }
 
 };

@@ -57,3 +57,11 @@ unsigned int getIdOfPoint(std::shared_ptr<Point> p, std::shared_ptr<Board> bptr)
 	return z;
 }
 
+bool pointsAreEquivalent(std::shared_ptr<Point> p, std::shared_ptr<Point> q, std::shared_ptr<Board> bptr)
+{
+	unsigned int ip = getIdOfPoint(p, bptr);
+	unsigned int iq = getIdOfPoint(q, bptr);
+
+	return ip == iq;
+
+}
