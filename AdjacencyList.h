@@ -148,6 +148,7 @@ public:
 
 	void DijkstraAlgorithm(std::shared_ptr<Point> source, std::shared_ptr<Point> dest)
 	{
+		
 		PQueue pq = PQueue();
 		pq.insertQueue(source, nullptr, 0);
 

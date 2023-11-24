@@ -33,7 +33,7 @@ void compute_x_y_from_z(unsigned int z, unsigned int& x, unsigned int& y)
 {
 
 	double numerator = std::sqrt(8 * z + 1) - 1;
-	unsigned int w = std::floor(numerator / 2);
+	unsigned int w = static_cast<unsigned int>(std::floor(numerator / 2));
 
 	unsigned int t = static_cast<unsigned int>((w * w + w) / 2);
 

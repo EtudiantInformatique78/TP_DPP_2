@@ -6,7 +6,7 @@
 
 #define PPU std::pair<std::shared_ptr<Point>, unsigned int>
 
-class Compare {
+class ComparePPU {
 public:
     bool operator()(PPU below, PPU above)
     {
@@ -26,7 +26,7 @@ class PQueue
 {
 private:
     
-    std::map<std::shared_ptr<Point>, PPU, Compare> map;
+    std::map<std::shared_ptr<Point>, PPU, ComparePPU> map;
     std::set<std::shared_ptr<Point>> set;
 
 
