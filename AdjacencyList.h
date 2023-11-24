@@ -7,6 +7,7 @@
 #include <cmath>
 
 #include "Board.h"
+#include <map>
 
 
 struct pairInt
@@ -52,6 +53,87 @@ void compute_x_y_from_z(unsigned int z, unsigned int& x, unsigned int& y)
 	x = w - y;
 
 }
+
+class AdjacencyListPoint
+{
+private:
+	std::map<unsigned int, std::list<std::shared_ptr<Point>>> themap;
+	Board b;
+
+public:
+	AdjacencyListPoint(Board& b)
+	{
+		this->b = b;
+		themap = {};
+	};
+	virtual ~AdjacencyListPoint() {};
+
+	void add_edge(std::shared_ptr<Point> pu, std::shared_ptr<Point> pv)
+	{
+		pairInt indicesU = coordToInd(pu.get()->getX(), pu.get()->getY(), b.getInitialX(), b.getInitialY());
+
+		unsigned int zU = coordinateToNumber(indicesU.x, indicesU.y);
+
+		if(themap.find(zU) == themap.end())
+		{
+			// Not in the map
+			// creation of the list
+			std::list<std::shared_ptr<Point>> listPtr;
+			listPtr.push_back(pu);
+			themap.insert(std::pair<unsigned int, std::list<std::shared_ptr<Point>>>(zU, listPtr ));
+		}
+		else
+		{
+			themap.at(zU).push_back(pu);
+		}
+
+
+		pairInt indicesV = coordToInd(pv.get()->getX(), pv.get()->getY(), b.getInitialX(), b.getInitialY());
+
+		unsigned int zV = coordinateToNumber(indicesV.x, indicesV.y);
+
+		if (themap.find(zV) == themap.end())
+		{
+			// Not in the map
+			// creation of the list
+			std::list<std::shared_ptr<Point>> listPtr;
+			listPtr.push_back(pv);
+			themap.insert(std::pair<unsigned int, std::list<std::shared_ptr<Point>>>(zV, listPtr));
+		}
+		else
+		{
+			themap.at(zV).push_back(pv);
+		}
+
+	}
+
+	void displayAdjList()
+	{
+		std::map<unsigned int, std::list<std::shared_ptr<Point>>>::iterator it;
+		for(it = themap.begin(); it != themap.end(); ++it)
+		{
+			unsigned int x_ind;
+			unsigned int y_ind;
+			unsigned int z = (it)->first;
+			std::list<std::shared_ptr<Point>> list = it->second;
+			std::list<std::shared_ptr<Point>>::iterator itList;
+
+
+			compute_x_y_from_z(z, x_ind, y_ind);
+
+			pairInt p = indToCoord(x_ind, y_ind, b.getInitialX(), b.getInitialY());
+			std::cout << "(" << p.x << "," << p.y << ")" << " : ";
+			
+			for(itList = list.begin(); itList != list.end(); ++itList)
+			{
+				std::cout << "(" << itList->get()->getX() << "," << itList->get()->getY() << ")" << " ; ";
+			}
+
+			std::cout << std::endl;
+		}
+	}
+};
+
 
 void displayAdjList(std::list<std::shared_ptr<Point>> adj_list[], int v)
 {

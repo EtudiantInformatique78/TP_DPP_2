@@ -220,6 +220,15 @@ public:
 		std::cout << "----------------------------------" << std::endl;
 	}
 
+	int getInitialX()
+	{
+		return initialX;
+	}
+	int getInitialY()
+	{
+		return initialY;
+	}
+
 	std::shared_ptr<Point> get_point(int coordX, int coordY)
 	{
 		int sizeLine = board.at(0).size();

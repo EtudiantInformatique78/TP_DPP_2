@@ -15,9 +15,31 @@
 int main()
 {
 
+    int iniX = -3;
+    int iniY = -3;
+
+    Point p1 = Point(0, 2, true);
+    Point p2 = Point(0, 3, true);
+    //41 51
+
+    
+
+    pairInt pair1 = coordToInd(p1.getX(), p1.getY(), iniX, iniY);
+    pairInt pair2 = coordToInd(p2.getX(), p2.getY(), iniX, iniY); 
+
+
+    //pairInt pair1 = { p1.getX(), p1.getY() };
+    //pairInt pair2 = { p2.getX(), p2.getY() };
+
+    unsigned int z1 = coordinateToNumber(pair1.x, pair1.y);
+    unsigned int z2 = coordinateToNumber(pair2.x, pair2.y);
+
+    std::cout << "For (" << p1.getX() << "," << p1.getY() << "), z1 = " << z1 << std::endl;
+    std::cout << "For (" << p2.getX() << "," << p2.getY() << "), z2 = " << z2 << std::endl;
 
 
 
+    /*
     unsigned int z = coordinateToNumber(40, 5);
     
     std::cout << "z = " << z << std::endl;
@@ -27,6 +49,10 @@ int main()
     compute_x_y_from_z(z, x, y);
 
     std::cout << "x = " << x << " , y = " << y << std::endl;
+
+    */
+
+    
 
     //test();
 
