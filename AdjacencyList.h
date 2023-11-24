@@ -5,7 +5,8 @@
 #include <iterator>
 #include <cmath>
 #include <map>
-
+#include <queue>
+#include <set>
 
 #include "Board.h"
 #include "structCoord.h"
@@ -28,7 +29,10 @@ pairInt indToCoord(int x_ind, int y_ind, int initialX, int initialY)
 	return pair;
 }
 
-
+// Cantor pairing function
+/*
+It's a simple bijection between NxN and N
+*/
 unsigned int coordinateToNumber(unsigned int x, unsigned int y)
 {
 	unsigned int sum1 = x + y;
@@ -36,7 +40,7 @@ unsigned int coordinateToNumber(unsigned int x, unsigned int y)
 	unsigned int result = static_cast<unsigned int>( (sum1 * sum2) / 2 + y);
 	return result;
 }
-
+// The inverse function of Cantor pairing function
 void compute_x_y_from_z(unsigned int z, unsigned int& x, unsigned int& y)
 {
 	
@@ -49,6 +53,22 @@ void compute_x_y_from_z(unsigned int z, unsigned int& x, unsigned int& y)
 	x = w - y;
 
 }
+
+
+unsigned int getIdOfPoint(std::shared_ptr<Point> p, std::shared_ptr<Board> bptr)
+{
+	int x_coord = p.get()->getX();
+	int y_coord = p.get()->getY();
+
+	int initX = bptr.get()->getInitialX();
+	int initY = bptr.get()->getInitialY();
+
+	pairInt pairSource = coordToInd(x_coord, y_coord, initX, initY);
+
+	unsigned int z = coordinateToNumber(pairSource.x, pairSource.y);
+	return z;
+}
+
 
 class AdjacencyListPoint
 {
@@ -181,60 +201,57 @@ public:
 			std::cout << std::endl;
 		}
 	}
+
+	void DijkstraAlgorithm(std::shared_ptr<Point> source, std::shared_ptr<Point> dest)
+	{
+
+		unsigned int sourceId = getIdOfPoint(source, bptr);
+
+		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
+
+		// unsigned int for the vertice u
+		// int for the distance
+		std::map<unsigned int, int> dist = {};
+
+		// unsigned int for the vertice u and the previous one 
+		// 
+		std::map<unsigned int, unsigned int> prev = {};
+
+		dist.insert(std::pair<unsigned int, int>(sourceId, 0));
+
+		std::queue<std::shared_ptr<Point>> Q;
+
+		std::list<std::shared_ptr<Point>>::iterator it;
+		for(it = lstOfSource.begin(); it != lstOfSource.end(); ++it)
+		{
+			Q.push(*it);
+		}
+
+		std::set<std::shared_ptr<Point>> S;
+
+		while (!Q.empty())
+		{
+			std::shared_ptr<Point> p = Q.front();
+			Q.pop();
+
+			S.insert(p);
+
+			std::list<std::shared_ptr<Point>> neigh = bptr.get()->lstNeighborg(p);
+
+			std::list<std::shared_ptr<Point>>::iterator itNeigh;
+
+			for(itNeigh = neigh.begin(); itNeigh != neigh.end(); ++itNeigh)
+			{
+							
+			}
+
+		}
+
+		
+
+	}
+
 };
 
 
-void displayAdjList(std::list<std::shared_ptr<Point>> adj_list[], int v)
-{
-	for (int i = 0; i < v; i++)
-	{
-		std::cout << i << "-->";
-		std::list<std::shared_ptr<Point>>::iterator it;
-		for(it = adj_list[i].begin(); it != adj_list[i].end(); ++it)
-		{
-			std::cout << "k" << *it << "k ";
-		}
-		std::cout << std::endl;
-	}
-}
 
-
-template<typename T>
-void add_edge(std::list<T> adj_list[], T u, T v)
-{
-	
-//	adj_list[u].push_back(v);
-//	adj_list[v].push_back(u);
-}
-
-void test()
-{
-	int v = 6; // 6 vertices in the graph
-	std::list<std::shared_ptr<Point>> adj_list(v);
-
-	std::shared_ptr<Point> ptr1 = std::shared_ptr<Point>(new Point(0, 0, true));
-	std::shared_ptr<Point> ptr2 = std::shared_ptr<Point>(new Point(1, 0, true));
-	std::shared_ptr<Point> ptr3 = std::shared_ptr<Point>(new Point(2, 0, true));
-
-	std::shared_ptr<Point> ptr4 = std::shared_ptr<Point>(new Point(0, 1, true));
-	std::shared_ptr<Point> ptr5 = std::shared_ptr<Point>(new Point(1, 1, true));
-	std::shared_ptr<Point> ptr6 = std::shared_ptr<Point>(new Point(2, 1, true));
-
-	add_edge(&adj_list, ptr1, ptr2);
-	add_edge(&adj_list, ptr1, ptr4);
-	add_edge(&adj_list, ptr1, ptr5);
-
-
-	add_edge(&adj_list, ptr2, ptr4);
-	add_edge(&adj_list, ptr2, ptr5);
-	add_edge(&adj_list, ptr2, ptr6);
-	add_edge(&adj_list, ptr2, ptr3);
-
-	add_edge(&adj_list, ptr3, ptr5);
-	add_edge(&adj_list, ptr3, ptr6);
-	add_edge(&adj_list, ptr4, ptr5);
-	add_edge(&adj_list, ptr5, ptr6);
-
-
-	displayAdjList(&adj_list, v);
-}
