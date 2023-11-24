@@ -38,19 +38,13 @@ class AStarStrategy : public PathFindingStrategy
 			//check if we arrived
 			if (actualPoint.point->getX() == objective->getX() && actualPoint.point->getY() == objective->getY())
 			{
-				Node currentPoint = actualPoint;
+				finalPath.push_back(actualPoint);
 				std::reverse(closedList.begin(), closedList.end());
 				for (Node node : closedList)
 				{
 					std::cout << node.point->getX() << "-" << node.point->getY() << std::endl;
+					finalPath.push_back(node);
 				}
-				while (currentPoint.point->getX() != start->getX() && currentPoint.point->getY() != start->getY())
-				{
-					finalPath.push_back(currentPoint);
-					currentPoint = closedList.at(0);
-					closedList.erase(closedList.begin());
-				}
-				finalPath.push_back(startNode);
 				std::reverse(finalPath.begin(), finalPath.end());
 				break;
 			}
@@ -93,11 +87,6 @@ class AStarStrategy : public PathFindingStrategy
 			{
 				closedList.push_back(actualPoint);
 				std::cout << "adding (" << actualPoint.point->getX() << "," << actualPoint.point->getY() << ") to closedList" << std::endl;
-			}
-
-			for (Node node : closedList)
-			{
-				std::cout << "(" << node.point->getX() << "," << node.point->getY() << ")" << std::endl;
 			}
 
 			bool founded = false;

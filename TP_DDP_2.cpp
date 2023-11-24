@@ -16,7 +16,7 @@ int main()
     
     ContextPathFinding cpf;
 
-    std::shared_ptr<Point> p1 = std::shared_ptr<Point>(new Point(9, 5));
+    std::shared_ptr<Point> p1 = std::shared_ptr<Point>(new Point(4, -2));
 
     std::shared_ptr<Point> p2 = std::shared_ptr<Point>(new Point(6, 17));
 
