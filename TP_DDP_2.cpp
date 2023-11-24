@@ -16,13 +16,9 @@ int main()
     
     ContextPathFinding cpf;
 
-    cpf.setStrategy(std::shared_ptr<PathFindingStrategy>(new DijkstraStrategy()) ) ;
+    std::shared_ptr<Point> p1 = std::shared_ptr<Point>(new Point(9, 5));
 
-    std::shared_ptr<Point> p1 = std::shared_ptr<Point>(new Point(5, 3));
-
-    std::shared_ptr<Point> p2 = std::shared_ptr<Point>(new Point(4, 6));
-
-    cpf.findPath(b, p1, p2);
+    std::shared_ptr<Point> p2 = std::shared_ptr<Point>(new Point(6, 17));
 
     cpf.setStrategy(std::shared_ptr<PathFindingStrategy>(new AStarStrategy()));
 
