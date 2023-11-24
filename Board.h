@@ -7,6 +7,9 @@
 #include <list>
 #include "structCoord.h"
 
+
+
+
 class Point
 {
 private:
@@ -166,49 +169,8 @@ public:
 				int y;
 				bool passable = true;
 
-				std::cout << "toto";
 
 				setValueForAPoint(x, y, passable, word, delimiter);
-
-				/*
-
-								while (true) {
-					pos = word.find(delimiter);
-					token = word.substr(0, pos);
-
-					if(i == 0)
-					{
-						token.erase(0, 1);
-						x = std::stoi(token);
-					}
-					else if(i == 1)
-					{
-						y = std::stoi(token);
-					}
-					else if(i == 2)
-					{
-						if(token == "true)")
-						{
-							passable = true;
-						}
-						else if(token == "false)")
-						{
-							passable = false;
-						}
-					}
-					i += 1;
-					if(i == 3)
-					{
-						break;
-					}
-					word.erase(0, pos + delimiter.length());
-
-
-				}
-
-
-				*/
-				
 
 
 				if(firstCell)

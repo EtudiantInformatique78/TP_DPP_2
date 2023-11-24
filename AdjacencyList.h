@@ -11,6 +11,7 @@
 #include "structCoord.h"
 
 
+
 pairInt coordToInd(int x, int y, int initialX, int initialY)
 {
 	pairInt pair = {};
@@ -53,19 +54,22 @@ class AdjacencyListPoint
 {
 private:
 	std::map<unsigned int, std::list<std::shared_ptr<Point>>> themap;
-	Board b;
+	std::shared_ptr<Board> bptr;
 
 public:
-	AdjacencyListPoint(Board& b)
+	AdjacencyListPoint(std::shared_ptr<Board> b)
 	{
-		this->b = b;
+		this->bptr = b;
 		themap = {};
 	};
 	virtual ~AdjacencyListPoint() {};
 
 	void add_edge(std::shared_ptr<Point> pu, std::shared_ptr<Point> pv)
 	{
-		pairInt indicesU = coordToInd(pu.get()->getX(), pu.get()->getY(), b.getInitialX(), b.getInitialY());
+		int initialX = bptr.get()->getInitialX();
+		int initialY = bptr.get()->getInitialY();
+
+		pairInt indicesU = coordToInd(pu.get()->getX(), pu.get()->getY(), initialX, initialY);
 
 		unsigned int zU = coordinateToNumber(indicesU.x, indicesU.y);
 
@@ -83,7 +87,7 @@ public:
 		}
 
 
-		pairInt indicesV = coordToInd(pv.get()->getX(), pv.get()->getY(), b.getInitialX(), b.getInitialY());
+		pairInt indicesV = coordToInd(pv.get()->getX(), pv.get()->getY(), initialX, initialY);
 
 		unsigned int zV = coordinateToNumber(indicesV.x, indicesV.y);
 
@@ -114,9 +118,13 @@ public:
 			std::list<std::shared_ptr<Point>>::iterator itList;
 
 
+			int initialX = bptr.get()->getInitialX();
+			int initialY = bptr.get()->getInitialY();
+
+
 			compute_x_y_from_z(z, x_ind, y_ind);
 
-			pairInt p = indToCoord(x_ind, y_ind, b.getInitialX(), b.getInitialY());
+			pairInt p = indToCoord(x_ind, y_ind, initialX, initialY);
 			std::cout << "(" << p.x << "," << p.y << ")" << " : ";
 			
 			for(itList = list.begin(); itList != list.end(); ++itList)

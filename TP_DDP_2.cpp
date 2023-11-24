@@ -17,7 +17,7 @@ int main()
 
     Board b = Board();
 
-    AdjacencyListPoint adj_point = AdjacencyListPoint(b);
+    AdjacencyListPoint adj_point = AdjacencyListPoint(std::shared_ptr<Board>(&b));
 
     std::shared_ptr<Point> ptr1 = std::shared_ptr<Point>(new Point(0, 0, true));
     std::shared_ptr<Point> ptr2 = std::shared_ptr<Point>(new Point(0, 1, true));
