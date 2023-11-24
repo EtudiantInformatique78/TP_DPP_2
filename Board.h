@@ -74,26 +74,6 @@ public:
 		coordY = y;
 	}
 	
-
-	//mehods 
-	/*
-	int compare2nodes(Point point)
-	{
-		if (heuristic < point.heuristic)
-		{
-			return 1;
-		}
-		else if (heuristic == point.heuristic)
-		{
-			return 0;
-		}
-		else
-		{
-			return -1;
-		}
-	}
-	*/
-	
 };
 
 class Board
