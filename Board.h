@@ -252,13 +252,14 @@ public:
 		int x_coord = p.get()->getX();
 		int y_coord = p.get()->getY();
 
-		pairInt p1 = { x_coord-1, y_coord };
+		pairInt p1 = { x_coord, y_coord - 1 };
 		pairInt p2 = { x_coord-1, y_coord - 1 };
-		pairInt p3 = { x_coord, y_coord - 1 };
+		pairInt p3 = { x_coord - 1, y_coord  };
 		pairInt p4 = { x_coord+1, y_coord - 1 };
 		
 
 		std::list<pairInt> lstPair = { p1, p2, p3, p4 };
+		//std::list<pairInt> lstPair = { p1 };
 
 		std::list<pairInt>::iterator pairIntIt;
 

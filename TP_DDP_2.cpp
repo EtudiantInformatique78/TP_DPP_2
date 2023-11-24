@@ -51,8 +51,13 @@ int main()
 
     */
 
+    //std::shared_ptr<Point> p = bptr->get_point(-5, -10);
+
+    //std::cout << "x = " << p.get()->getX() << "y = " << p.get()->getY() << std::endl;
+
     adj_point.setMap();
     
+
     bptr.get()->printBoard();
 
     adj_point.displayAdjList();

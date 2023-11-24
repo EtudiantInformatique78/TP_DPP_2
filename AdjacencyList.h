@@ -113,7 +113,7 @@ public:
 		std::deque<std::deque<std::shared_ptr<Point>>>::iterator it1;
 		std::deque<std::shared_ptr<Point>>::iterator it2;
 
-		std::cout << "----------------------------------" << std::endl;
+		//std::cout << "----------------------------------" << std::endl;
 
 		for (it1 = board.begin(); it1 != board.end(); it1++)
 		{
@@ -121,25 +121,33 @@ public:
 			{
 
 				
-				std::list<std::shared_ptr<Point>> listNeigh = this->bptr.get()->lstNeighborg((*it2));
-
-				std::list<std::shared_ptr<Point>>::iterator it3;
-				for(it3 = listNeigh.begin() ; it3 != listNeigh.end(); ++it3)
+				if((*it2).get()->isPassabe())
 				{
-					if( (*it3).get()->isPassabe())
+				
+					std::list<std::shared_ptr<Point>> listNeigh = this->bptr.get()->lstNeighborg((*it2));
+
+					std::list<std::shared_ptr<Point>>::iterator it3;
+
+					for (it3 = listNeigh.begin(); it3 != listNeigh.end(); ++it3)
 					{
-						add_edge(*it2, *it3);
+						if ((*it3).get()->isPassabe())
+						{
+							add_edge(*it2, *it3);
+						}
 					}
+
 				}
+
+				
 
 				//std::cout << *((*it2).get());
 
 				//std::cout << " | (" << (*it2)->getX() << "," << (*it2)->getY() << ") | ";
 			}
-			std::cout << std::endl;
+			//std::cout << std::endl;
 		}
 
-		std::cout << "----------------------------------" << std::endl;
+		//std::cout << "----------------------------------" << std::endl;
 
 
 	}
