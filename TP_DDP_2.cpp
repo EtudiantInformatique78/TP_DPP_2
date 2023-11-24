@@ -4,12 +4,17 @@
 #include <iostream>
 #include <deque>
 #include <vector>
+#include <queue>
 
 #include "Board.h"
-
 #include "PathFindingStrategy.h"
-
 #include "AdjacencyList.h"
+#include "ComparePointDistQueue.h"
+
+
+#define PPU std::pair<std::shared_ptr<Point>, unsigned int>
+
+
 
 
 int main()
@@ -55,13 +60,41 @@ int main()
 
     //std::cout << "x = " << p.get()->getX() << "y = " << p.get()->getY() << std::endl;
 
-    adj_point.setMap();
+    //adj_point.setMap();
     
 
-    bptr.get()->printBoard();
+    //bptr.get()->printBoard();
 
-    adj_point.displayAdjList();
+    //adj_point.displayAdjList();
     
+    
+
+    std::priority_queue<PPU, std::vector<PPU>, Compare> ds;
+
+
+    std::shared_ptr<Point> ptr1 = std::shared_ptr<Point>(new Point(1, 2));
+
+    
+    std::shared_ptr<Point> ptr2 = std::shared_ptr<Point>(new Point(1, 0));
+
+    std::shared_ptr<Point> ptr3 = std::shared_ptr<Point>(new Point(2, 2));
+
+    std::shared_ptr<Point> ptr4 = std::shared_ptr<Point>(new Point(2, 3));
+    
+
+    ds.push({ ptr1, 50 });
+    ds.push({ ptr2, 45 });
+    ds.push({ ptr1, 55 });
+    ds.push({ ptr1, 52 });
+
+
+    std:: cout << "The priority queue is : \n";
+    while (!ds.empty()) {
+        std :: cout << ds.top().first << " " << ds.top().second
+            << "\n";
+        ds.pop(); // heapify happens
+    }
+
 
 //    b.printBoard();
 
@@ -132,5 +165,8 @@ int main()
     std::cout << "(" << point->getX() << "," << point->getY() << ") : "  << std::endl;
     b.printBoard();
     */
+
+
+    return 0;
 
 }

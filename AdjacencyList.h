@@ -10,64 +10,8 @@
 
 #include "Board.h"
 #include "structCoord.h"
-
-
-
-pairInt coordToInd(int x, int y, int initialX, int initialY)
-{
-	pairInt pair = {};
-	pair.x = x - initialX;
-	pair.y = y - initialY;
-	return pair;
-}
-
-pairInt indToCoord(int x_ind, int y_ind, int initialX, int initialY)
-{
-	pairInt pair = {};
-	pair.x = x_ind + initialX;
-	pair.y = y_ind + initialY;
-	return pair;
-}
-
-// Cantor pairing function
-/*
-It's a simple bijection between NxN and N
-*/
-unsigned int coordinateToNumber(unsigned int x, unsigned int y)
-{
-	unsigned int sum1 = x + y;
-	unsigned int sum2 = x + y + 1;
-	unsigned int result = static_cast<unsigned int>( (sum1 * sum2) / 2 + y);
-	return result;
-}
-// The inverse function of Cantor pairing function
-void compute_x_y_from_z(unsigned int z, unsigned int& x, unsigned int& y)
-{
-	
-	double numerator = std::sqrt(8 * z + 1) - 1;
-	unsigned int w = std::floor(numerator/2);
-
-	unsigned int t = static_cast<unsigned int>((w * w + w) / 2);
-
-	y = z - t;
-	x = w - y;
-
-}
-
-
-unsigned int getIdOfPoint(std::shared_ptr<Point> p, std::shared_ptr<Board> bptr)
-{
-	int x_coord = p.get()->getX();
-	int y_coord = p.get()->getY();
-
-	int initX = bptr.get()->getInitialX();
-	int initY = bptr.get()->getInitialY();
-
-	pairInt pairSource = coordToInd(x_coord, y_coord, initX, initY);
-
-	unsigned int z = coordinateToNumber(pairSource.x, pairSource.y);
-	return z;
-}
+#include "utilsDDP.h"
+#include "ComparePointDistQueue.h"
 
 
 class AdjacencyListPoint
@@ -205,6 +149,71 @@ public:
 	void DijkstraAlgorithm(std::shared_ptr<Point> source, std::shared_ptr<Point> dest)
 	{
 
+		//std::set<std::shared_ptr<Point>> hasAdist;
+
+		//std::map<std::shared_ptr<Point>, unsigned int> dist;
+
+		std::shared_ptr<Point> ref = source;
+		unsigned int sourceId = getIdOfPoint(ref, bptr);
+		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
+
+		PQueue pq = PQueue();
+
+		pq.insertQueue(ref, nullptr, 0);
+
+
+		
+		std::priority_queue<PPU, std::vector<PPU>, Compare> priorityQueue;
+
+		//dist.insert({ source, 0 });
+		//priorityQueue.push({ source, 0 });
+		//hasAdist.insert(source);
+
+
+		std::list<std::shared_ptr<Point>>::iterator it;
+		for(it = lstOfSource.begin(); it != lstOfSource.end() ; ++it)
+		{
+			/*
+			
+			if(hasAdist.find(*it) == hasAdist.end())
+			{
+				unsigned int distanceBetween = dist[ref] + weight(*ref.get(), (*(*it).get()));
+
+				dist.insert({ *it, distanceBetween });
+				priorityQueue.push({*it, distanceBetween});
+				hasAdist.insert(*it);
+				//dist.insert(std::pair<std::shared_ptr<Point>, unsigned int>(*it, distanceBetween));
+			}
+			else
+			{
+				unsigned int distanceBetween = dist[ref] + weight(*ref.get(), (*(*it).get()));
+				if (distanceBetween <=  dist[*it])
+				{
+
+				}
+				dist.insert({ *it, distanceBetween });
+				priorityQueue.push({ *it, distanceBetween });
+			}
+
+			*/
+			
+			
+		}
+
+
+		// updated value are supposed to be before the older value
+		ref = priorityQueue.top().first;
+
+		sourceId = getIdOfPoint(ref, bptr);
+
+		lstOfSource = this->themap[sourceId];
+
+
+
+
+
+		/*
+		
 		unsigned int sourceId = getIdOfPoint(source, bptr);
 
 		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
@@ -213,8 +222,8 @@ public:
 		// int for the distance
 		std::map<unsigned int, int> dist = {};
 
-		// unsigned int for the vertice u and the previous one 
-		// 
+		// unsigned int for the vertice u and the previous one
+		//
 		std::map<unsigned int, unsigned int> prev = {};
 
 		dist.insert(std::pair<unsigned int, int>(sourceId, 0));
@@ -248,7 +257,7 @@ public:
 			{
 				if (dist.find(getIdOfPoint(*itNeigh, bptr)) == dist.end())
 				{
-				
+
 				}
 				//if()
 				//if(dist[pId])
@@ -256,6 +265,12 @@ public:
 
 		}
 
+
+
+
+		
+		*/
+		
 		
 
 	}
