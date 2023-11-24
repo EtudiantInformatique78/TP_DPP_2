@@ -191,8 +191,8 @@ public:
 
 	std::shared_ptr<Point> get_point(int coordX, int coordY)
 	{
-		int sizeLine = board.at(0).size();
-		int sizeColumn = board.size();
+		size_t sizeLine = board.at(0).size();
+		size_t sizeColumn = board.size();
 		int maxValueX = board.at(0).at(sizeLine - 1)->getX();
 		int maxValueY = board.at(sizeColumn - 1).at(0)->getY();
 		int minValueX = board.at(0).at(0)->getX();
@@ -210,8 +210,8 @@ public:
 	void push_point(int coordX, int coordY)
 	{
 		//init values needed to check where to extend the map
-		int sizeLine = board.at(0).size();
-		int sizeColumn = board.size();
+		size_t sizeLine = board.at(0).size();
+		size_t sizeColumn = board.size();
 		int maxIndexLine = board.at(0).at(sizeLine - 1)->getX();
 		int maxIndexColumn = board.at(sizeColumn - 1).at(0)->getY();
 		int minIndexLine = board.at(0).at(0)->getX();
@@ -272,8 +272,8 @@ public:
 	void push_south()
 	{
 		std::deque<std::shared_ptr<Point>> newRow;
-		int sizeLine = board.at(0).size();
-		int sizeColumn = board.size();
+		size_t sizeLine = board.at(0).size();
+		size_t sizeColumn = board.size();
 		int maxIndexLine = board.at(0).at(sizeLine -1)->getX()+1;
 		int maxIndexColumn = board.at(sizeColumn - 1).at(0)->getY();
 		for (int i = board.at(0).at(0)->getX(); i < maxIndexLine; i++)
@@ -300,8 +300,8 @@ public:
 	void push_north()
 	{
 		std::deque<std::shared_ptr<Point>> newRow;
-		int sizeLine = board.at(0).size();
-		int sizeColumn = board.size();
+		size_t sizeLine = board.at(0).size();
+		size_t sizeColumn = board.size();
 		int maxIndexLine = board.at(0).at(sizeLine - 1)->getX() + 1;
 		int minIndexColumn = board.at(0).at(0)->getY();
 		for (int i = board.at(0).at(0)->getX(); i < maxIndexLine; i++)
