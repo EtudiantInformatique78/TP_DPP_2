@@ -2,19 +2,14 @@
 #include <iostream>
 #include <list>
 #include <vector>
-
 #include <iterator>
 #include <cmath>
-
-#include "Board.h"
 #include <map>
 
 
-struct pairInt
-{
-	int x;
-	int y;
-};
+#include "Board.h"
+#include "structCoord.h"
+
 
 pairInt coordToInd(int x, int y, int initialX, int initialY)
 {

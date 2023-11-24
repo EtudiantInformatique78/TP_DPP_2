@@ -4,7 +4,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-
+#include <list>
+#include "structCoord.h"
 
 class Point
 {
@@ -75,24 +76,7 @@ public:
 	}
 	
 
-	//mehods 
-	/*
-	int compare2nodes(Point point)
-	{
-		if (heuristic < point.heuristic)
-		{
-			return 1;
-		}
-		else if (heuristic == point.heuristic)
-		{
-			return 0;
-		}
-		else
-		{
-			return -1;
-		}
-	}
-	*/
+
 	
 };
 
@@ -104,20 +88,59 @@ private:
 	int initialX;
 
 
+	void setValueForAPoint(int& x, int&y, bool& passable, std::string word, std::string delimiter)
+	{
+		int i = 0;
+		while (true) {
+			size_t pos = word.find(delimiter);
+			std::string token = word.substr(0, pos);
+
+			if (i == 0)
+			{
+				token.erase(0, 1);
+				x = std::stoi(token);
+			}
+			else if (i == 1)
+			{
+				y = std::stoi(token);
+			}
+			else if (i == 2)
+			{
+				if (token == "true)")
+				{
+					passable = true;
+				}
+				else if (token == "false)")
+				{
+					passable = false;
+				}
+			}
+			//std::cout << token << std::endl;
+			//i = (i + 1) % 3;
+			i += 1;
+			if (i == 3)
+			{
+				break;
+			}
+			word.erase(0, pos + delimiter.length());
+
+		}
+
+
+	}
+
 public:
 	Board() {
+
+		// Default initialization
+		this->initialX = 0;
+		this->initialY = 0;
 
 		// file pointer 
 		std::fstream fread;
 
 		// opens an existing csv file or creates a new file. 
 		fread.open("board.csv", std::ios::in);
-
-
-//		const int sizeInit = 30;
-
-//		const int lastY = initialY + sizeInit;
-//		const int lastX = initialX + sizeInit;
 
 		std::string temp;
 		std::string line;
@@ -143,8 +166,13 @@ public:
 				int y;
 				bool passable = true;
 
-				//while ((pos = word.find(delimiter)) != std::string::npos) {
-				while (true) {
+				std::cout << "toto";
+
+				setValueForAPoint(x, y, passable, word, delimiter);
+
+				/*
+
+								while (true) {
 					pos = word.find(delimiter);
 					token = word.substr(0, pos);
 
@@ -168,8 +196,6 @@ public:
 							passable = false;
 						}
 					}
-					//std::cout << token << std::endl;
-					//i = (i + 1) % 3;
 					i += 1;
 					if(i == 3)
 					{
@@ -180,10 +206,15 @@ public:
 
 				}
 
+
+				*/
+				
+
+
 				if(firstCell)
 				{
-					initialX = x;
-					initialY = y;
+					this->initialX = x;
+					this->initialY = y;
 					firstCell = false;
 				}
 
@@ -195,9 +226,6 @@ public:
 		}
 	};
 	virtual ~Board() {};
-
-
-
 	
 	void printBoard()
 	{
@@ -229,6 +257,8 @@ public:
 		return initialY;
 	}
 
+
+
 	std::shared_ptr<Point> get_point(int coordX, int coordY)
 	{
 		int sizeLine = board.at(0).size();
@@ -246,6 +276,38 @@ public:
 		return board.at(coordY - minValueY).at(coordX - minValueX);
 	}
 	
+
+	std::list<std::shared_ptr<Point>> lstNeighborg(std::shared_ptr<Point> p)
+	{
+		std::list<std::shared_ptr<Point>> lstPoint;
+		
+		int x_coord = p.get()->getX();
+		int y_coord = p.get()->getY();
+
+		pairInt p1 = { x_coord-1, y_coord };
+		pairInt p2 = { x_coord-1, y_coord - 1 };
+		pairInt p3 = { x_coord, y_coord - 1 };
+		pairInt p4 = { x_coord+1, y_coord - 1 };
+		
+
+		std::list<pairInt> lstPair = { p1, p2, p3, p4 };
+
+		std::list<pairInt>::iterator pairIntIt;
+
+		for(pairIntIt = lstPair.begin(); pairIntIt != lstPair.end(); ++pairIntIt)
+		{
+			std::shared_ptr<Point> ptr = get_point(pairIntIt->x, pairIntIt->y);
+			if(ptr != nullptr)
+			{
+				lstPoint.push_back(ptr);
+			}
+		}
+
+
+		return lstPoint;
+	}
+
+
 	//push a point in the map
 	void push_point(int coordX, int coordY)
 	{

@@ -130,8 +130,10 @@
     <ClCompile Include="TP_DDP_2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdjacencyList.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="PathFindingStrategy.h" />
+    <ClInclude Include="structCoord.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
