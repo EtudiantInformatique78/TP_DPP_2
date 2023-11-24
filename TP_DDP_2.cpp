@@ -9,10 +9,26 @@
 
 #include "PathFindingStrategy.h"
 
+#include "AdjacencyList.h"
+
 
 int main()
 {
 
+
+
+
+    unsigned int z = coordinateToNumber(40, 5);
+    
+    std::cout << "z = " << z << std::endl;
+
+    unsigned int x, y ;
+    
+    compute_x_y_from_z(z, x, y);
+
+    std::cout << "x = " << x << " , y = " << y << std::endl;
+
+    //test();
 
     /*
     Board b = Board();

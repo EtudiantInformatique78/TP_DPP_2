@@ -100,6 +100,9 @@ class Board
 {
 private:
 	std::deque<std::deque<std::shared_ptr<Point>>> board;
+	int initialY;
+	int initialX;
+
 
 public:
 	Board() {
@@ -110,16 +113,17 @@ public:
 		// opens an existing csv file or creates a new file. 
 		fread.open("board.csv", std::ios::in);
 
-		const int initialY = -10;
-		const int initialX = -10;
-		const int sizeInit = 30;
 
-		const int lastY = initialY + sizeInit;
-		const int lastX = initialX + sizeInit;
+//		const int sizeInit = 30;
+
+//		const int lastY = initialY + sizeInit;
+//		const int lastX = initialX + sizeInit;
 
 		std::string temp;
 		std::string line;
 		std::string word;
+
+		bool firstCell = true;
 
 		while(fread >> temp)
 		{
@@ -174,7 +178,14 @@ public:
 					word.erase(0, pos + delimiter.length());
 
 
-				} 
+				}
+
+				if(firstCell)
+				{
+					initialX = x;
+					initialY = y;
+					firstCell = false;
+				}
 
 				std::shared_ptr<Point> ptr = std::shared_ptr<Point>(new Point(y, x, passable));
 				deck.push_back(ptr);
