@@ -79,12 +79,12 @@ public:
 			// Not in the map
 			// creation of the list
 			std::list<std::shared_ptr<Point>> listPtr;
-			listPtr.push_back(pu);
+			listPtr.push_back(pv);
 			themap.insert(std::pair<unsigned int, std::list<std::shared_ptr<Point>>>(zU, listPtr ));
 		}
 		else
 		{
-			themap.at(zU).push_back(pu);
+			themap.at(zU).push_back(pv);
 		}
 
 
@@ -97,12 +97,12 @@ public:
 			// Not in the map
 			// creation of the list
 			std::list<std::shared_ptr<Point>> listPtr;
-			listPtr.push_back(pv);
+			listPtr.push_back(pu);
 			themap.insert(std::pair<unsigned int, std::list<std::shared_ptr<Point>>>(zV, listPtr));
 		}
 		else
 		{
-			themap.at(zV).push_back(pv);
+			themap.at(zV).push_back(pu);
 		}
 
 	}
