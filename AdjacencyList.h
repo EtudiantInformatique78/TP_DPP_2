@@ -220,6 +220,7 @@ public:
 		dist.insert(std::pair<unsigned int, int>(sourceId, 0));
 
 		std::queue<std::shared_ptr<Point>> Q;
+		Q.push(source);
 
 		std::list<std::shared_ptr<Point>>::iterator it;
 		for(it = lstOfSource.begin(); it != lstOfSource.end(); ++it)
@@ -236,13 +237,21 @@ public:
 
 			S.insert(p);
 
+			unsigned int pId = getIdOfPoint(p, bptr);
+
+
 			std::list<std::shared_ptr<Point>> neigh = bptr.get()->lstNeighborg(p);
 
 			std::list<std::shared_ptr<Point>>::iterator itNeigh;
 
 			for(itNeigh = neigh.begin(); itNeigh != neigh.end(); ++itNeigh)
 			{
-							
+				if (dist.find(getIdOfPoint(*itNeigh, bptr)) == dist.end())
+				{
+				
+				}
+				//if()
+				//if(dist[pId])
 			}
 
 		}
