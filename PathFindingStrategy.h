@@ -3,13 +3,6 @@
 #include <iostream>
 #include <cmath>
 
-struct Node
-{
-	std::shared_ptr<Point> point;
-	double cost;
-	double heuristic;
-};
-
 class PathFindingStrategy
 {
 public:
@@ -110,6 +103,9 @@ class AStarStrategy : public PathFindingStrategy
 			std::cout << "(" << node.point->getX() << "," << node.point->getY() << ")";
 		}
 		std::cout << std::endl;
+
+		board.printBoardWithAstarAlgorithm(finalPath);
+
 	}
 
 	void checkNeighbor(std::shared_ptr<Point> neighbor, std::vector<Node> &closedList, std::vector<Node> &openedList, Node actual, std::shared_ptr<Point> objective, bool isDiagonale)

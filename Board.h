@@ -5,7 +5,6 @@
 #include <string>
 #include <sstream>
 
-
 class Point
 {
 private:
@@ -60,10 +59,13 @@ public:
 		{
 			out << "x";
 		}
-		//		out << "(" << p.coordY << "," << p.coordX << ")";
 		return out;
 	}
 	
+	bool isEqualsTo(Point pointToCompare)
+	{
+		return coordX == pointToCompare.getX() && coordY == pointToCompare.getY();
+	}
 
 	void setX(int x)
 	{
@@ -74,6 +76,13 @@ public:
 		coordY = y;
 	}
 	
+};
+
+struct Node
+{
+	std::shared_ptr<Point> point;
+	double cost;
+	double heuristic;
 };
 
 class Board
@@ -165,8 +174,40 @@ public:
 	};
 	virtual ~Board() {};
 
+	void printBoardWithAstarAlgorithm(std::vector<Node> astarResult)
+	{
+		std::deque<std::deque<std::shared_ptr<Point>>>::iterator it1;
+		std::deque<std::shared_ptr<Point>>::iterator it2;
 
-
+		for (it1 = board.begin(); it1 != board.end(); it1++)
+		{
+			for (it2 = (*it1).begin(); it2 != (*it1).end(); it2++)
+			{
+				bool isInAstarResult = false;
+				for (Node node : astarResult)
+				{
+					if (node.point->isEqualsTo(*(*it2).get()))
+					{
+						isInAstarResult = true;
+						break;
+					}
+				}
+				if(isInAstarResult)
+				{
+					std::cout << "0";
+				}
+				else if ((*(*it2).get()).isPassabe())
+				{
+					std::cout << " ";
+				}
+				else
+				{
+					std::cout << "x";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
 	
 	void printBoard()
 	{
