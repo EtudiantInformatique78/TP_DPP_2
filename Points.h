@@ -58,6 +58,17 @@ public:
 		return out;
 	}
 
+	friend bool operator==(Point& p1, Point& p2)
+	{
+		if(p1.coordX == p2.coordX)
+		{
+			if(p1.coordY == p2.coordY)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	void setX(int x)
 	{
