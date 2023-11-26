@@ -33,7 +33,7 @@ int main()
     bptr.get()->printBoard();
     //adj_point.DijkstraAlgorithm(std::shared_ptr<Point>(new Point(-7, 5)), std::shared_ptr<Point>(new Point(-5, 5)));
 
-    adj_point.Dijkstra(std::shared_ptr<Point>(new Point(-7, 5)), std::shared_ptr<Point>(new Point(-5, 5)));
+    adj_point.Dijkstra(std::shared_ptr<Point>(new Point(-7, 5)), std::shared_ptr<Point>(new Point(9, 4)));
 
     /*
 

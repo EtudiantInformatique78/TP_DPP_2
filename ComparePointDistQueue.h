@@ -153,7 +153,10 @@ public:
 
     ~PQueue() {};
 
-    
+    void insertMap(unsigned int p, unsigned int pred)
+    {
+        this->mapPointAndPred.insert({ p, pred });
+    }
 
     bool isInQueue(std::shared_ptr<Point> p)
     {
@@ -215,8 +218,12 @@ public:
         {
             return *ptr.get();
         }
-
-        return *ptr.get();
+        else
+        {
+            return { nullptr, UINT_MAX };
+        }
+        
+        //return *ptr.get();
     }
     
     void pop()
@@ -298,6 +305,37 @@ public:
 
         */
         
+        unsigned int idSource = getIdOfPoint(source, bptr);
+        unsigned int idDest = getIdOfPoint(dest, bptr);
+
+        std::deque<unsigned int> reversePath;
+
+        reversePath.push_back(idDest);
+
+        unsigned int nextPoint = mapPointAndPred[idDest];
+
+        while (nextPoint != idSource)
+        {
+            reversePath.push_back(nextPoint);
+            nextPoint = mapPointAndPred[nextPoint];
+        }
+
+        reversePath.push_back(idSource);
+
+
+        std::deque<unsigned int>::reverse_iterator it;
+
+        for (it = reversePath.rbegin(); it != reversePath.rend(); ++it)
+        {
+            unsigned int z = *it;
+            unsigned ind_x;
+            unsigned ind_y;
+            compute_x_y_from_z(z, ind_x, ind_y);
+
+            pairInt pair = indToCoord(ind_x, ind_y, initialX, initialY);
+
+            std::cout << "(" << pair.x << "," << pair.y << ")" << std::endl;
+        }
 
 
     }

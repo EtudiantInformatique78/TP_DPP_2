@@ -236,7 +236,7 @@ public:
 		int initY = bptr.get()->getInitialY();
 
 
-		// I use a personnal priority queue
+		// I use a personal priority queue
 		PQueue pq = PQueue(initX, initY);
 		// I insert the source with no previous vertice and a dist of 0
 		pq.insertQueue(source, nullptr, 0);
@@ -262,7 +262,7 @@ public:
 			pointerRef = pq.top().first;
 			unsigned int minDist = pq.top().second;
 
-			std::cout << "(" << pointerRef.get()->getX() << "," << pointerRef.get()->getY() << ")" << std::endl;
+			//std::cout << "(" << pointerRef.get()->getX() << "," << pointerRef.get()->getY() << ")" << std::endl;
 
 			 
 			/*
@@ -283,9 +283,27 @@ public:
 				unsigned int distanceBetween = minDist + weight(*pointerRef.get(), (*(*it).get()));
 				if (!pq.isInQueue(*it))
 				{
-					std::cout << "not in queue" << std::endl;
+					//std::cout << "not in queue" << std::endl;
 					pq.insertQueue(*it, pointerRef, distanceBetween);
 				}
+				else
+				{
+					PPU pairIt = pq.getValue(*it);
+					//if(pairIt.first != nullptr)
+					//{
+						unsigned int qDist = pairIt.second;
+
+						if (distanceBetween < qDist)
+						{
+							pq.updateQueue(*it, pointerRef, distanceBetween);
+						}
+					//}
+					//else
+					//{
+					//	std::cerr << "Line: " << __LINE__ << " ; Error pairIt has a nullptr" << std::endl;
+					//}
+				}
+
 				/*
 				else
 				{
@@ -307,6 +325,8 @@ public:
 					std::cout << (*it).get()->getX() << "," << (*it).get()->getY() << ")";
 					std::cout << std::endl;
 					hasReach = true;
+					unsigned int toto = getIdOfPoint(pointerRef, bptr);
+					pq.insertMap(itId, toto);
 					break;
 				}
 
@@ -316,16 +336,22 @@ public:
 			pq.pop();
 
 
-
+			/*
+			
 			i += 1;
 			if(i == 10)
 			{
 				hasReach = true;
 			}
 
+			*/
+			
+
 
 
 		}
+
+		pq.printPath(source, dest, bptr);
 
 		std::cout << "While loop finished" << std::endl;
 	}
