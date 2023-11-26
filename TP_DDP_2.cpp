@@ -24,9 +24,5 @@ int main()
 
     cpf.findPath(b, p1, p2);
 
-    
-    std::shared_ptr<Point> point = b.get_point(2, 5);
-
-    std::cout << "(" << point->getX() << "," << point->getY() << ") : "  << std::endl;
     b.printBoard();
 }

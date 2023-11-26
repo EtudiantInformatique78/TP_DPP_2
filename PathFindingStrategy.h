@@ -35,7 +35,6 @@ class AStarStrategy : public PathFindingStrategy
 				std::reverse(closedList.begin(), closedList.end());
 				for (Node node : closedList)
 				{
-					std::cout << node.point->getX() << "-" << node.point->getY() << std::endl;
 					finalPath.push_back(node);
 				}
 				std::reverse(finalPath.begin(), finalPath.end());
@@ -79,7 +78,6 @@ class AStarStrategy : public PathFindingStrategy
 			if (closedList.empty())
 			{
 				closedList.push_back(actualPoint);
-				std::cout << "adding (" << actualPoint.point->getX() << "," << actualPoint.point->getY() << ") to closedList" << std::endl;
 			}
 
 			bool founded = false;
@@ -94,7 +92,6 @@ class AStarStrategy : public PathFindingStrategy
 			if (!founded)
 			{
 				closedList.push_back(actualPoint);
-				std::cout << "adding (" << actualPoint.point->getX() << "," << actualPoint.point->getY() << ") to closedList" << std::endl;
 			}
 		}
 		std::cout << "best path from (" << start->getX() << "," << start->getY() << ") to (" << objective->getX() << "," << objective->getY() << ") :" << std::endl;
@@ -112,12 +109,10 @@ class AStarStrategy : public PathFindingStrategy
 	{
 		if (neighbor == nullptr)
 		{
-			std::cout << "got out of the map" << std::endl;
 			return;
 		}
 		if (!neighbor->isPassabe())
 		{
-			std::cout << "(" << neighbor->getX() << "," << neighbor->getY() << ") not possible" << std::endl;
 			return;
 		}
 
@@ -162,7 +157,6 @@ class AStarStrategy : public PathFindingStrategy
 				}
 			}
 		}
-		std::cout << "adding (" << neighborNode.point->getX() << "," << neighborNode.point->getY() << ") to openedList with cost :" << neighborNode.heuristic << std::endl;
 		openedList.insert(openedList.begin() + i, neighborNode);
 		
 	}

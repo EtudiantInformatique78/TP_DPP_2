@@ -179,6 +179,8 @@ public:
 		std::deque<std::deque<std::shared_ptr<Point>>>::iterator it1;
 		std::deque<std::shared_ptr<Point>>::iterator it2;
 
+		std::cout << "----------------------------------" << std::endl;
+
 		for (it1 = board.begin(); it1 != board.end(); it1++)
 		{
 			for (it2 = (*it1).begin(); it2 != (*it1).end(); it2++)
@@ -207,6 +209,8 @@ public:
 			}
 			std::cout << std::endl;
 		}
+
+		std::cout << "----------------------------------" << std::endl;
 	}
 	
 	void printBoard()
