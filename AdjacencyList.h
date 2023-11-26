@@ -149,6 +149,9 @@ public:
 	void DijkstraAlgorithm(std::shared_ptr<Point> source, std::shared_ptr<Point> dest)
 	{
 		
+
+
+
 		
 		PQueue pq = PQueue();
 		pq.insertQueue(source, nullptr, 0);
@@ -163,12 +166,16 @@ public:
 		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
 		std::list<std::shared_ptr<Point>> lstOfVertex = pq.trueNeighborg(lstOfSource);
 
+		
 
-		while (!pointsAreEquivalent(pointPivot, dest, bptr))
+		while ((*pointPivot.get()) != (*dest.get()))
 		{
+			std::cout << "(*pointPivot.get()) : (" << (*pointPivot.get()).getX() << "," << (*pointPivot.get()).getY() << ") ;";
+			std::cout << "(*dest.get()) : (" << (*dest.get()).getX() << "," << (*dest.get()).getY() << ") " << std::endl;
+			
 			ref = pq.top();
-			std::shared_ptr<Point> pointPivot = ref.first;
-			unsigned int distPair = ref.second;
+			pointPivot = ref.first;
+			distPair = ref.second;
 
 			unsigned int Id = getIdOfPoint(pointPivot, bptr);
 			lstOfSource = this->themap[Id];
@@ -185,6 +192,8 @@ public:
 				else
 				{
 					PPU pairIt = pq.getValue(*it);
+					
+
 					unsigned int qdist = pairIt.second;
 
 					if (distanceBetween <= qdist)

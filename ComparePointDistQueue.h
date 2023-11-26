@@ -13,9 +13,14 @@ class ComparePPU {
 
 public:
     bool operator()(PairPPU below, PairPPU above)
-    {
-        
-        if (below.second.second >= above.second.second)
+    {        
+        //return below.second.second >= above.second.second;
+        if(&below == &above)
+        {
+            return false;
+        }
+
+        if (below.second.second > above.second.second)
         {
             return true;
         }
@@ -23,6 +28,9 @@ public:
         {
             return false;
         }
+        
+        
+        
 
     }
 };
@@ -58,20 +66,25 @@ public:
 
     std::shared_ptr<PPU> getValue(std::shared_ptr<Point> key)
     {
+        
+        std::shared_ptr<PPU> ptr = nullptr;
         for (auto it = this->c.begin(); it != this->c.end(); ++it)
         {
             PairPPU pair = static_cast<PairPPU>(*it);
             std::shared_ptr<Point> p = pair.first;
         
-            std::shared_ptr<PPU> returnValue = std::shared_ptr<PPU>(&pair.second);
+            //std::shared_ptr<PPU> returnValue = std::shared_ptr<PPU>(&pair.second);
 
             if ((*p.get()) == (*key.get()))
             {
-                return returnValue;
+                ptr = std::make_shared<PPU>(pair.second);
+                //ptr = returnValue;
+                //return returnValue;
             }
 
         }
-        return nullptr;
+
+        return ptr;
     }
 
 };
@@ -183,6 +196,11 @@ public:
     PPU getValue(std::shared_ptr<Point> key)
     {
         std::shared_ptr<PPU> ptr = cpq.getValue(key);
+        if(ptr != nullptr)
+        {
+            return *ptr.get();
+        }
+
         return *ptr.get();
     }
     

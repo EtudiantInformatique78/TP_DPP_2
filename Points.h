@@ -70,6 +70,18 @@ public:
 		return false;
 	}
 
+	friend bool operator!=(Point& p1, Point& p2)
+	{
+		if(p1.coordX != p2.coordX)
+		{
+			return true;
+		}
+		else
+		{
+			return p1.coordY != p2.coordY;
+		}
+	}
+
 	void setX(int x)
 	{
 		coordX = x;
