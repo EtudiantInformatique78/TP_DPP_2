@@ -35,6 +35,15 @@ int main()
 
     adj_point.Dijkstra(std::shared_ptr<Point>(new Point(-7, 5)), std::shared_ptr<Point>(new Point(9, 4)));
 
+    //unsigned int z = getIdOfPoint(std::shared_ptr<Point>(new Point(4, 4)), bptr);
+    //std::cout << z << std::endl;
+    //if(adj_point.isThereAPoint(z))
+    //{
+    //    std::cout << "true";
+    //}
+    
+
+
     /*
 
         custom_priority_queue cpq;

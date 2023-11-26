@@ -222,7 +222,10 @@ public:
 	
 	}
 
-
+	bool isThereAPoint(unsigned int p)
+	{
+		return themap.find(p) != themap.end();
+	}
 
 	void Dijkstra(std::shared_ptr<Point> source, std::shared_ptr<Point> dest)
 	{
