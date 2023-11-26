@@ -234,7 +234,8 @@ public:
 
 		int initX = bptr.get()->getInitialX();
 		int initY = bptr.get()->getInitialY();
-		 
+
+
 		// I use a personnal priority queue
 		PQueue pq = PQueue(initX, initY);
 		// I insert the source with no previous vertice and a dist of 0
@@ -247,7 +248,7 @@ public:
 		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
 		
 		// The termination condition is when the dest is reached. 
-
+		unsigned int termination = getIdOfPoint(dest, bptr);
 		/* Termination condition not reached */
 		bool hasReach = false;
 		while(!hasReach)
@@ -299,11 +300,22 @@ public:
 					}
 				}
 				*/
-				
+				unsigned int itId = getIdOfPoint(*it, bptr);
+				if(itId == termination)
+				{
+					std::cout << "I found : (";
+					std::cout << (*it).get()->getX() << "," << (*it).get()->getY() << ")";
+					std::cout << std::endl;
+					hasReach = true;
+					break;
+				}
+
 			}
 
 
 			pq.pop();
+
+
 
 			i += 1;
 			if(i == 10)

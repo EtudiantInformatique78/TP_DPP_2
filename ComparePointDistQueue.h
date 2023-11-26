@@ -131,9 +131,9 @@ private:
 
     custom_priority_queue cpq;
 
-    std::set<std::shared_ptr<Point>> inQueue;
+    std::set<unsigned int> inQueue;
 
-    std::map<std::shared_ptr<Point>, std::shared_ptr<Point>> mapPointAndPred;
+    std::map<unsigned int, unsigned int> mapPointAndPred;
 
     int initialX = 0;
     int initialY = 0;
@@ -157,7 +157,8 @@ public:
 
     bool isInQueue(std::shared_ptr<Point> p)
     {
-        return inQueue.find(p) != inQueue.end();
+        unsigned int z = getIdOfPoint(p, initialX, initialY);
+        return inQueue.find(z) != inQueue.end();
     }
     
     void insertQueue(std::shared_ptr<Point> vertice, std::shared_ptr<Point> predecesor, unsigned int dist)
@@ -165,7 +166,10 @@ public:
         PPU pair1 = { predecesor, dist };
         std::pair<std::shared_ptr<Point>, PPU> pair2 = {vertice, pair1};
         cpq.push(pair2);
-        inQueue.insert(vertice);
+
+        unsigned int idVertice = getIdOfPoint(vertice, initialX, initialY);
+
+        inQueue.insert(idVertice);
         //map.insert({vertice, std::pair<std::shared_ptr<Point>, unsigned int>(predecesor, dist)});
     }
     
@@ -220,15 +224,26 @@ public:
         std::shared_ptr<Point> p = cpq.top().first;
         std::shared_ptr<Point> pred = cpq.top().second.first;
         
-        unsigned int idPoint = getIdOfPoint(p, initialX, initialY);
+        unsigned int idPointP = getIdOfPoint(p, initialX, initialY);
+        // UINT_MAX for null value
+        unsigned int idPointPred = UINT32_MAX;
+        if(pred != nullptr)
+        {
+            idPointPred = getIdOfPoint(pred, initialX, initialY);
+        }
 
-        set.insert(idPoint);
-        mapPointAndPred.insert({ p, pred });
+
+
+        set.insert(idPointP);
+        mapPointAndPred.insert({ idPointP, idPointPred });
 //        setPointAndPred.insert(pred);
         
         cpq.pop();
 
-        auto it = inQueue.find(p);
+        //unsigned int idP = getIdOfPoint(p, initialX, initialY);
+
+
+        auto it = inQueue.find(idPointP);
         if(it != inQueue.end())
         {
             inQueue.erase(it);
@@ -242,11 +257,11 @@ public:
         std::list<std::shared_ptr<Point>>::iterator it;
         for(it = list.begin(); it != list.end(); ++it)
         {
-            std::cout << "In for loop" << std::endl;
-            if((*it).get()->getX() == -7 && (*it).get()->getY() == 5)
-            {
-                __debugbreak();
-            }
+            //std::cout << "In for loop" << std::endl;
+            //if((*it).get()->getX() == -7 && (*it).get()->getY() == 5)
+            //{
+            //    //__debugbreak();
+            //}
             unsigned int z = getIdOfPoint((*it), initialX, initialY);
             if(set.find(z) == set.end())
             {
@@ -260,6 +275,8 @@ public:
 
     void printPath(std::shared_ptr<Point> source, std::shared_ptr<Point> dest, std::shared_ptr<Board> bptr)
     {
+        /*
+        
         std::deque<std::shared_ptr<Point>> reversePath;
 
         reversePath.push_back(dest);
@@ -278,6 +295,9 @@ public:
         {
             std::cout << "(" << (*it).get()->getX() << "," << (*it).get()->getY() << ")" << std::endl;
         }
+
+        */
+        
 
 
     }
