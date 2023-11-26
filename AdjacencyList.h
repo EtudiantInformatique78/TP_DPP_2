@@ -167,9 +167,15 @@ public:
 		std::list<std::shared_ptr<Point>> lstOfVertex = pq.trueNeighborg(lstOfSource);
 
 		
+		//unsigned int sourcePointPivot =
+
 
 		while ((*pointPivot.get()) != (*dest.get()))
 		{
+			
+			
+
+
 			std::cout << "(*pointPivot.get()) : (" << (*pointPivot.get()).getX() << "," << (*pointPivot.get()).getY() << ") ;";
 			std::cout << "(*dest.get()) : (" << (*dest.get()).getX() << "," << (*dest.get()).getY() << ") " << std::endl;
 			
@@ -214,6 +220,102 @@ public:
 
 		
 	
+	}
+
+
+
+	void Dijkstra(std::shared_ptr<Point> source, std::shared_ptr<Point> dest)
+	{
+		/*
+			Initialization steps
+		*/
+		std::shared_ptr<Point> pointerRef;
+		int i = 0;
+
+		int initX = bptr.get()->getInitialX();
+		int initY = bptr.get()->getInitialY();
+		 
+		// I use a personnal priority queue
+		PQueue pq = PQueue(initX, initY);
+		// I insert the source with no previous vertice and a dist of 0
+		pq.insertQueue(source, nullptr, 0);
+
+		// I need his neighborgs
+		// Each point has a unique Id according to the Cantor pairing function
+		unsigned int sourceId = getIdOfPoint(source, bptr);
+		// With this Id, I get all the source's neighborgs on the graph
+		std::list<std::shared_ptr<Point>> lstOfSource = this->themap[sourceId];
+		
+		// The termination condition is when the dest is reached. 
+
+		/* Termination condition not reached */
+		bool hasReach = false;
+		while(!hasReach)
+		{
+			/*
+				Find the node with the minimum distance	
+			*/
+
+			// pq.top() gives me the point with the smallest distance on the queue
+			
+			pointerRef = pq.top().first;
+			unsigned int minDist = pq.top().second;
+
+			std::cout << "(" << pointerRef.get()->getX() << "," << pointerRef.get()->getY() << ")" << std::endl;
+
+			 
+			/*
+				Update distances for adjacent nodes
+			*/
+
+			// I need first the adjacent nodes in the graph
+
+			unsigned int Id = getIdOfPoint(pointerRef, bptr);
+			lstOfSource = this->themap[Id];
+			std::list<std::shared_ptr<Point>> lstOfVertex = pq.trueNeighborg(lstOfSource);
+
+
+			// Then, I loop on the nodes
+			std::list<std::shared_ptr<Point>>::iterator it;
+			for (it = lstOfVertex.begin(); it != lstOfVertex.end(); ++it)
+			{
+				unsigned int distanceBetween = minDist + weight(*pointerRef.get(), (*(*it).get()));
+				if (!pq.isInQueue(*it))
+				{
+					std::cout << "not in queue" << std::endl;
+					pq.insertQueue(*it, pointerRef, distanceBetween);
+				}
+				/*
+				else
+				{
+					PPU pairIt = pq.getValue(*it);
+
+
+					unsigned int qdist = pairIt.second;
+
+					if (distanceBetween <= qdist)
+					{
+						pq.updateQueue(*it, pointPivot, distanceBetween);
+					}
+				}
+				*/
+				
+			}
+
+
+			pq.pop();
+
+			i += 1;
+			if(i == 10)
+			{
+				hasReach = true;
+			}
+
+
+
+		}
+
+		std::cout << "While loop finished" << std::endl;
 	}
 
 };

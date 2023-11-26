@@ -57,6 +57,17 @@ unsigned int getIdOfPoint(std::shared_ptr<Point> p, std::shared_ptr<Board> bptr)
 	return z;
 }
 
+unsigned int getIdOfPoint(std::shared_ptr<Point> p, int initX, int initY)
+{
+
+	int x_coord = p.get()->getX();
+	int y_coord = p.get()->getY();
+
+	pairInt pairSource = coordToInd(x_coord, y_coord, initX, initY);
+
+	unsigned int z = coordinateToNumber(pairSource.x, pairSource.y);
+}
+
 bool pointsAreEquivalent(std::shared_ptr<Point> p, std::shared_ptr<Point> q, std::shared_ptr<Board> bptr)
 {
 	unsigned int ip = getIdOfPoint(p, bptr);

@@ -127,7 +127,7 @@ private:
     
     //std::map<std::shared_ptr<Point>, PPU, ComparePPU> map;
     //std::map<PPU, PPU, ComparePPU> map;
-    std::set<std::shared_ptr<Point>> set;
+    std::set<unsigned int> set;
 
     custom_priority_queue cpq;
 
@@ -135,11 +135,22 @@ private:
 
     std::map<std::shared_ptr<Point>, std::shared_ptr<Point>> mapPointAndPred;
 
+    int initialX = 0;
+    int initialY = 0;
+
+
 
 public:
     PQueue() {
         //map = {};
     };
+
+    PQueue(int x_init, int y_init) {
+        initialX = x_init;
+        initialY = y_init;
+        //map = {};
+    };
+
     ~PQueue() {};
 
     
@@ -209,11 +220,20 @@ public:
         std::shared_ptr<Point> p = cpq.top().first;
         std::shared_ptr<Point> pred = cpq.top().second.first;
         
-        set.insert(p);
-        mapPointAndPred.insert({ pred, p });
+        unsigned int idPoint = getIdOfPoint(p, initialX, initialY);
+
+        set.insert(idPoint);
+        mapPointAndPred.insert({ p, pred });
 //        setPointAndPred.insert(pred);
         
         cpq.pop();
+
+        auto it = inQueue.find(p);
+        if(it != inQueue.end())
+        {
+            inQueue.erase(it);
+        }
+        
     }
     
     std::list<std::shared_ptr<Point>> trueNeighborg(std::list<std::shared_ptr<Point>> list)
@@ -222,7 +242,13 @@ public:
         std::list<std::shared_ptr<Point>>::iterator it;
         for(it = list.begin(); it != list.end(); ++it)
         {
-            if(set.find(*it) == set.end())
+            std::cout << "In for loop" << std::endl;
+            if((*it).get()->getX() == -7 && (*it).get()->getY() == 5)
+            {
+                __debugbreak();
+            }
+            unsigned int z = getIdOfPoint((*it), initialX, initialY);
+            if(set.find(z) == set.end())
             {
                 returnList.push_back(*it);
             }
