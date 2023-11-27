@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -130,8 +130,16 @@
     <ClCompile Include="TP_DDP_2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdjacencyList.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="ComparePointDistQueue.h" />
     <ClInclude Include="PathFindingStrategy.h" />
+    <ClInclude Include="Points.h" />
+    <ClInclude Include="structCoord.h" />
+    <ClInclude Include="utilsDDP.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="board.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
